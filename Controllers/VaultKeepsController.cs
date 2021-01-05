@@ -1,37 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CodeWorks.Auth0Provider;
 using keepr2.Models;
 using keepr2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace keepr2.Controllers
 {
   [ApiController]
-  [Route("[controller]")]
-  public class ProfileController : ControllerBase
+  [Route("api/[controller]")]
+  public class VaultKeepsController : ControllerBase
   {
-    private readonly ProfilesService _ps;
-    private readonly KeepsService _ks;
+    private readonly VaultKeepsService _vks;
 
-    public ProfileController(ProfilesService ps, KeepsService ks)
+    public VaultKeepsController(VaultKeepsService vks)
     {
-      _ps = ps;
-      _ks = ks;
+      _vks = vks;
     }
 
-    [HttpGet]
+    [HttpPost]
     [Authorize]
-    public async Task<ActionResult<Profile>> Get()
+    public async Task<ActionResult<VaultKeep>> Post([FromBody] VaultKeep newVk)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        return Ok(_ps.GetOrCreateProfile(userInfo));
+        newVk.CreatorId = userInfo.Id;
+        return Ok(_vks.Create(newVk));
       }
       catch (System.Exception e)
       {
@@ -39,19 +34,22 @@ namespace keepr2.Controllers
       }
     }
 
-    [HttpGet("{id}/keeps")]
-    public async Task<ActionResult<Profile>> GetKeepsByProfile(string id)
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<string>> Delete(int id)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        return Ok(_ks.GetKeepsByProfile(id, userInfo?.Id));
+        return Ok(_vks.Delete(id, userInfo.Id));
       }
       catch (System.Exception e)
       {
-        return BadRequest(e.Message);
-      }
 
+        return BadRequest(e.Message);
+
+      }
     }
+
   }
 }

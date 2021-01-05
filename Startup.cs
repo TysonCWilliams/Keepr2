@@ -67,6 +67,10 @@ namespace keepr2
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
             services.AddTransient<ProfilesService>();
             services.AddTransient<ProfilesRepository>();
+            services.AddTransient<KeepsService>();
+            services.AddTransient<KeepsRepository>();
+            services.AddTransient<VaultsService>();
+            services.AddTransient<VaultsRepository>();
             // REVIEW Do you want to do something here?
         }
 
