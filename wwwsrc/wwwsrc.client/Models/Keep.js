@@ -1,7 +1,7 @@
 export default class Keep {
-  constructor(title, body, img) {
-    this.title = title
-    this.body = body
+  constructor(name, description, img) {
+    this.name = name
+    this.description = description
     this.img = img
   }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using keepr2.Models;
 using keepr2.Repositories;
 
@@ -21,6 +22,11 @@ namespace keepr2.Services
                 return _repo.Create(userInfo);
             }
             return foundProfile;
+        }
+
+        public Profile GetProfileById(string Id)
+        {
+          return _repo.GetProfileById(Id);
         }
     }
 }

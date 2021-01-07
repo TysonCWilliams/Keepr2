@@ -20,11 +20,22 @@ namespace keepr2.Repositories
     {
       string sql = @"
             INSERT INTO keeps 
-            (title, body, img, views, shares, keeps, creatorId)
+            (name, description, img, views, shares, keeps, creatorId)
             VALUES
-            (@Title, @Body, @Img, @Views, @Shares, @Keeps, @CreatorId);
+            (@Name, @Description, @Img, @Views, @Shares, @Keeps, @CreatorId);
             SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newKeep);
+    }
+
+    public int IncrementViewCount(string keepId)
+    {
+      string sql = @"
+            UPDATE  
+            (name, description, img, views, shares, keeps, creatorId)
+            VALUES
+            (@Name, @Description, @Img, @Views, @Shares, @Keeps, @CreatorId);
+            SELECT LAST_INSERT_ID();";
+      return _db.ExecuteScalar<int>(sql, keepId);
     }
 
     internal IEnumerable<Keep> getKeepsByProfile(string profId)
@@ -39,7 +50,7 @@ namespace keepr2.Repositories
       return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profId }, splitOn: "id");
     }
 
-    internal Keep GetOne(int id)
+    internal Keep GetKeepById(int id)
     {
       string sql = @"SELECT * from keeps WHERE id = @id";
       return _db.QueryFirstOrDefault<Keep>(sql, new { id });
@@ -50,8 +61,8 @@ namespace keepr2.Repositories
       string sql = @"
         UPDATE keeps
         SET
-        title = @Title,
-        body = @Body,
+        name = @Name,
+        description = @Description,
         img = @Img,
         views = @Views,
         shares = @Shares,
@@ -64,6 +75,13 @@ namespace keepr2.Repositories
     {
       string sql = populateCreator;
       return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, splitOn: "id");
+    }
+
+    internal bool Remove(int id)
+    {
+      string sql = "DELETE from keeps WHERE id = @id";
+      int valid = _db.Execute(sql, new { id });
+      return valid > 0;
     }
   }
 }

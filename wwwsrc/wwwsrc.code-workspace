@@ -1,17 +1,16 @@
-
 {
   "folders": [
     {
       "path": "wwwsrc.client"
     },
     {
-      "path": "wwwsrc.server"
+      "path": ".."
     }
   ],
   "settings": {
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "git.enableSmartCommit": true,
     "git.confirmSync": false,
     "git.autofetch": true,
@@ -35,6 +34,7 @@
     "eslint.codeActionsOnSave.mode": "all",
     "editor.codeActionsOnSave": {
       "source.fixAll": true
-    }
+    },
+    "editor.formatOnSave": true
   }
 }

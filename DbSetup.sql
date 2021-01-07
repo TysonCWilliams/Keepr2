@@ -1,4 +1,4 @@
-USE keepr08;
+USE tdub08;
 
 -- CREATE TABLE profiles (
 --     id VARCHAR(255) NOT NULL,
@@ -10,8 +10,8 @@ USE keepr08;
 
 -- CREATE TABLE keeps (
 --   id INT NOT NULL AUTO_INCREMENT,
---   title VARCHAR(255) NOT NULL,
---   body VARCHAR(500) NOT NULL,
+--   name VARCHAR(255) NOT NULL,
+--   description VARCHAR(500) NOT NULL,
 --   img VARCHAR(255) NOT NULL,
 --   views INT NOT NULL,
 --   shares INT NOT NULL,
@@ -23,4 +23,39 @@ USE keepr08;
 --       ON DELETE CASCADE
 -- )
 
+-- CREATE TABLE vaults (
+--   id INT NOT NULL AUTO_INCREMENT,
+--   name VARCHAR(255) NOT NULL,
+--   description VARCHAR(500) NOT NULL,
+--   isPrivate TINYINT NOT NULL,
+--   creatorId VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (id),
+--   FOREIGN KEY (creatorId)
+--       REFERENCES profiles(id)
+--       ON DELETE CASCADE
+-- )
 
+-- CREATE TABLE vaultkeeps(
+--   id INT NOT NULL AUTO_INCREMENT,   
+--   vaultId INT,
+--   keepId INT,
+--   creatorId VARCHAR(255) NOT NULL,
+
+--   PRIMARY KEY (id),
+
+--   FOREIGN KEY (vaultId)
+--   REFERENCES vaults (id)
+--   ON DELETE CASCADE,
+
+--   FOREIGN KEY (keepId)
+--   REFERENCES keeps (id)
+--   ON DELETE CASCADE,
+
+--    FOREIGN KEY (creatorId)
+--         REFERENCES profiles(id)
+--         ON DELETE CASCADE
+
+-- )
+
+-- DROP TABLE keeps;
+-- DROP TABLE vaults;

@@ -1,44 +1,55 @@
 <template>
   <div>
-
-    <div class="card" style="width: 18rem;">
-      <img :src="keep.img" class="card-img-top" alt="...">
-      <div class="card-body">
+    <div class="container">
+      <div class="card mt-3 ml-2" style="width: 18rem;">
+        <img :src="keep.img" class="card-img" alt="...">
+        <!-- <div class="card-title">
+        </div> -->
+        <button class="btn" @click="toggleModal()">
+          {{ keep.name }}
+        </button>
       </div>
-      <button class="btn" @click="toggleModal()">
-        {{keep.title}}
-      </button>
     </div>
 
     <div style="display: block !important;" v-if="state.showModal" class="modal fade show" aria-hidden="false">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">{{keep.title}}</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">
+              {{ keep.name }}
+            </h5>
+            <button @click="toggleModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            {{ keep.body }}
+            {{ keep.description }}
             <img :src="keep.img" style="position: relative; width: 100%" alt="">
           </div>
           <div class="modal-footer">
-            <button @click="toggleModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <img @click="navigateTo('/users/' + keep.creator.id)"
+                 :src="keep.creator.picture"
+                 height="40"
+                 class="rounded"
+                 alt=""
+            >
+            <!-- <button @click="toggleModal()" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-outline-info">
+              Add to Vault
+            </button>
           </div>
         </div>
       </div>
     </div>
-
   </div>
+  <!-- <img :src="user.picture" height="40" class="rounded" alt=""> -->
 </template>
-
 <script>
-
 import { computed, reactive } from 'vue'
-// import { AppState } from '../AppState'
+import { AppState } from '../AppState'
 import router from '../router'
+// import { profilesService } from '../services/ProfilesService'
+
 export default {
   name: 'KeepComponent',
   props: ['keepProp'],
@@ -48,7 +59,10 @@ export default {
     })
     return {
       state,
+      user: computed(() => AppState.user),
+      profile: computed(() => AppState.profile),
       keep: computed(() => props.keepProp),
+
       navigateTo(route) {
         console.log(route)
         router.push(route)
@@ -57,6 +71,10 @@ export default {
         state.showModal = !state.showModal
         console.log('Modal: ' + state.showModal)
       }
+
+      // deleteKeep() {
+      //   keepService.deleteKeep(props.keepProp._id)
+      // },
     }
   },
   components: {}
@@ -68,5 +86,10 @@ export default {
     height: auto;
     width: auto;
     position: relative;
+    border: solid;
+    /* border-radius: 30px; */
+    border-color: rgba(5, 5, 5, 0.938);
+    background-color: rgba(15, 15, 15, 0.164);
+    opacity: 10;
   }
 </style>

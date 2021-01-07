@@ -1,18 +1,11 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <img
-      :src="image"
-      alt="CodeWorks Logo"
-    >
-    <h1 class="my-5 bg-dark text-light p-3 rounded d-flex align-items-center">
-      <span class="mx-2 text-white">Vue 3 Starter</span>
-    </h1>
+  <div class="home">
     <!-- keeps -->
-    <div style="flex-direction:column">
+    <div class="ml-2 mt-3" style="flex-direction: column;">
       <keep-component
-      v-for="keep in keeps"
-      :keep-prop="keep"
-      :key="keep.id"
+        v-for="keep in keeps"
+        :keep-prop="keep"
+        :key="keep.id"
       ></keep-component>
     </div>
   </div>

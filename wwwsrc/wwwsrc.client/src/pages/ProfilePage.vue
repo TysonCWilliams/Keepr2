@@ -1,51 +1,112 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ profile.name }}</h1>
-    <img
-      class="rounded"
-      :src="profile.picture"
-      alt=""
+  <div class="profile text-center container-fluid">
+    <div class="row justify-content-left">
+      <div class="col-2 mt-3 ml-3">
+        <img class="rounded" :src="profile.picture" alt="">
+      </div>
+      <div class="col-2 mt-4">
+        <h2 class="profile-title">
+          {{ profile.name }}
+        </h2>
+        <h4 class="mt-1 info-vk">
+          Vaults:
+        </h4>
+        <h4 class="mt-1 info-vk">
+          Keeps:
+        </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 mt-3">
+        <h4>Vaults</h4>
+        <button type="button"
+                style="display: block;"
+                @click="toggleModal()"
+                class="btn btn-light"
+                data-toggle="modal"
+                data-target="#form"
+        >
+          <i class="fas fa-plus-square fa-2x fa-spin"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4">
+        <h4>Keeps</h4>
+        <button type="button"
+                style="display: block;"
+                @click="toggleModal()"
+                class="btn btn-light"
+                data-toggle="modal"
+                data-target="#form"
+        >
+          <i class="fas fa-plus-square fa-2x fa-spin"></i>
+        </button>
+      </div>
+    </div>
+
+    <div style="display: block !important;"
+         v-if="state.showModal"
+         class="modal fade show"
+         id="form"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="false"
     >
-    <p>{{ profile.email }}</p>
-    <h5>Add a Keep</h5>
-    <div class="row justify-content-center">
-      <div class="col-6 mt-5">
-        <!-- <form class="form group mt-4" @submit.prevent="createKeep"> -->
-        <div class="card">
-          <h3 class="keep-title">
-            Create a Keep
-          </h3>
-          <div class="card-body">
-            <div class="row justify-content-center">
-              <div class="form-group mx-sm-3 mb-2">
-                <input style="margin-bottom: 1em;" type="text" class="form-control my-border" v-model="state.newKeep.title" placeholder="Title">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Create Keep
+            </h5>
+            <button @click="toggleModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="keep-name">Title</label>
+                <input type="text"
+                       v-model="state.newKeep.name"
+                       class="form-control"
+                       id="keep-name"
+                       aria-describedby="keep-name"
+                       placeholder="Enter Keep Name..."
+                >
+              </div>
+              <div class="form-group">
+                <label for="keep-image">Image</label>
+                <input type="text"
+                       v-model="state.newKeep.img"
+                       class="form-control"
+                       id="keep-image"
+                       placeholder="URL..."
+                >
+              </div>
+              <div class="form-group">
+                <label for="keep-description">Description</label>
+                <input type="text"
+                       v-model="state.newKeep.description"
+                       class="form-control"
+                       id="keep-description"
+                       placeholder="Enter Description..."
+                >
               </div>
             </div>
-            <div class="row justify-content-center">
-              <div class="form-group mx-sm-3 mb-2">
-                <input style="margin-bottom: 1em;" type="text" class="form-control my-border" v-model="state.newKeep.img" placeholder="Image...">
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="form-group mx-sm-3 mb-4">
-                <textarea style="height: 100px;" class="form-control my-border" v-model="state.newKeep.body" placeholder="Description"></textarea>
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <button @click="createKeep()" class="btn btn-primary mb-2">
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" @click="createKeep()" class="btn btn-success">
                 Create
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
 
-    <keep-component
-      v-for="keep in keeps"
-      :keep-prop="keep"
-      :key="keep.id"
-    ></keep-component>
+    <keep-component v-for="keep in keeps" :keep-prop="keep" :key="keep.id"></keep-component>
   </div>
 </template>
 
@@ -53,23 +114,33 @@
 import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
-import { profileService } from '../services/ProfileService'
+import { profilesService } from '../services/ProfilesService'
 import { KeepComponent } from '../components/KeepComponent.vue'
+import { vaultsService } from '../services/VaultsService'
 export default {
   name: 'Profile',
   setup() {
     onMounted(async() => {
       if (!AppState.profile.id) {
-        await profileService.getProfile()
+        await profilesService.getProfile()
       }
       await keepsService.getMyKeeps()
       console.log(AppState.keeps)
     })
     const state = reactive({
+      showModal: false,
+
+      // showVaultModel: false,
+
       newKeep: {
-        title: '',
-        body: '',
-        img: '',
+        name: '',
+        description: '',
+        img: ''
+      },
+      newVault: {
+        name: '',
+        description: '',
+        isPrivate: false
       }
     })
     return {
@@ -78,31 +149,68 @@ export default {
         // state.newKeep
         keepsService.createKeep(state.newKeep)
       },
+      createVault() {
+        vaultsService.createVault(state.newVault)
+      },
       profile: computed(() => AppState.profile),
       keeps: computed(() => AppState.keeps),
-      components: {
-        KeepComponent
-      }
+      vaults: computed(() => AppState.vaults),
+
+      toggleModal() {
+        state.showModal = !state.showModal
+        console.log('Modal: ' + state.showModal)
+      },
+      // toggleVaultModal() {
+      //   state.showVaultModal = !state.showVaultModal
+      //   console.log('Modal: ' + state.showVaultModal)
+      // },
+
+      components: { KeepComponent }
     }
   }
 }
 </script>
 
 <style scoped>
-img {
-  max-width: 100px;
-}
+  img {
+    max-width: 100px;
+  }
 
-.card{
-  border-color: aquamarine;
-  border-style: solid;
-  border-width: thick;
-  background-color: rgba(0, 0, 0, 0.651);
-}
+  .card {
+    border-color: aquamarine;
+    border-style: solid;
+    border-width: thick;
+    background-color: rgba(0, 0, 0, 0.651);
+  }
 
-.my-border{
-  border-color: rgb(45, 255, 3);
-  border-style: solid;
-  border-width: thick;
-}
+  button {
+    border-style: solid;
+    border-color: rgba(0, 255, 234, 0.89);
+    border-width: medium;
+    color: black;
+    font-weight: bold;
+  }
+
+  .my-border {
+    border-color: rgb(45, 255, 3);
+    border-style: solid;
+    border-width: thick;
+  }
+
+  .profile-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  .info-vk {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    color: rgb(4, 245, 245);
+    background-color: rgba(0, 0, 0, 0.822);
+    border-width: thick;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.877);
+  }
 </style>

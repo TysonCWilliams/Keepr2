@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="keepDetails container-fluid justify-content-center">
     <div class="card mb-3" style="max-width: 540px;">
       <div class="row no-gutters">
@@ -40,4 +40,4 @@ export default {
 
 <style lang="scss" scoped>
 
-</style>
+</style> -->

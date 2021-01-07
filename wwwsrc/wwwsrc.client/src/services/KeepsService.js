@@ -25,20 +25,38 @@ class KeepsService {
   async getMyKeeps() {
     try {
       logger.log(AppState.profile)
-      const res = await api(`profile/${AppState.profile.id}/keeps`)
+      const res = await api(`api/profiles/${AppState.profile.id}/keeps`)
       AppState.keeps = res.data
       // NOTE dont forget to add your js doc types in the appstate
-      // AppState.keeps = res.data.map(e => new Keep(e.name, e.description))
+      // AppState.keeps = res.data.map(e => new Keep(e.title, e.body))
       // this now has intellisense on 'p' AppState.keeps.forEach(p=> p.)
     } catch (error) {
       logger.error(error)
     }
   }
 
-  async getKeepDetails(keepId) {
+  // async getKeepDetails(keepId) {
+  //   try {
+  //     const res = await api.get('api/keeps/' + keepId)
+  //     AppState.keepDetails = res.data
+  //   } catch (err) {
+  //     logger.error(err)
+  //   }
+  // }
+
+  async deleteKeep(keepId) {
     try {
-      const res = await api.get('api/keeps/' + keepId)
-      AppState.keepDetails = res.data
+      await api.delete('api/keeps/' + keepId)
+      this.getMyKeeps()
+    } catch (err) {
+      logger.error(err)
+    }
+  }
+
+  async editKeep(keepId, keepData) {
+    try {
+      await api.put('api/keeps/' + keepId, keepData)
+      this.getMyKeeps()
     } catch (err) {
       logger.error(err)
     }

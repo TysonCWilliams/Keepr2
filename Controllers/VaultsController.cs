@@ -13,20 +13,39 @@ namespace keepr2.Controllers
   public class VaultsController : ControllerBase
   {
     private readonly VaultsService _vs;
-    private readonly VaultKeepsService _vks;
-    public VaultsController(VaultsService vs, VaultKeepsService vks)
+    // private readonly VaultKeepsService _vks;
+    public VaultsController(VaultsService vs)
+    // ,VaultKeepsService vks
     {
       _vs = vs;
-      _vks = vks;
+      // _vks = vks;
     }
+
+    // [HttpPost]
+    // [Authorize]
+    // public ActionResult<Vault> Create([FromBody] Vault newVault)
+    // {
+    //   try
+    //   {
+    //     Vault created = _vs.Create(newVault);
+    //     return Ok(created);
+    //   }
+    //   catch (System.Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
 
     [HttpPost]
     [Authorize]
-    public ActionResult<Vault> Create([FromBody] Vault newVault)
+    public async Task<ActionResult<Vault>> Create([FromBody] Vault newVault)
     {
       try
       {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        newVault.CreatorId = userInfo.Id;
         Vault created = _vs.Create(newVault);
+        created.Creator = userInfo;
         return Ok(created);
       }
       catch (System.Exception e)

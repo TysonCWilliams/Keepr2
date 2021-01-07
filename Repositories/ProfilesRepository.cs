@@ -29,6 +29,15 @@ namespace keepr2.Repositories
             (@Name, @Picture, @Email, @Id)";
             _db.Execute(sql, userInfo);
             return userInfo;
+
         }
+        
+
+        internal Profile GetProfileById(string id)
+    {
+      string sql = @"SELECT * from profile WHERE id = @id";
+      return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+    }
+
     }
 }

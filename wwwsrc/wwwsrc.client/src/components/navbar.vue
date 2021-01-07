@@ -1,8 +1,10 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark my-custom-nav">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <h1 class="border border-primary">K</h1>
+        <h1 class="border shadow-lg" style="border-top-width: thick; border-color: rgb(168, 166, 166); color: rgb(0, 255, 242);">
+          K
+        </h1>
         <!-- <img
           alt="logo"
           src="../assets/img/cw-logo.png"
@@ -19,17 +21,17 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon" />
+      <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
+          <router-link :to="{ name: 'Home' }" class="nav-link" style="color: rgb(0, 255, 242);">
             Home
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
+          <router-link :to="{ name: 'AboutPage' }" class="nav-link" style="color: rgb(0, 255, 242);">
             About
           </router-link>
         </li>
@@ -124,5 +126,9 @@ a:hover {
 }
 .nav-item .nav-link.router-link-exact-active{
   color: var(--primary);
+}
+
+.my-custom-nav{
+background-color: black;
 }
 </style>

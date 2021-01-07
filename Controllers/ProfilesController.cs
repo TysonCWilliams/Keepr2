@@ -12,13 +12,13 @@ using Microsoft.Extensions.Logging;
 namespace keepr2.Controllers
 {
   [ApiController]
-  [Route("[controller]")]
-  public class ProfileController : ControllerBase
+  [Route("api/[controller]")]
+  public class ProfilesController : ControllerBase
   {
     private readonly ProfilesService _ps;
     private readonly KeepsService _ks;
 
-    public ProfileController(ProfilesService ps, KeepsService ks)
+    public ProfilesController(ProfilesService ps, KeepsService ks)
     {
       _ps = ps;
       _ks = ks;
@@ -32,6 +32,20 @@ namespace keepr2.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         return Ok(_ps.GetOrCreateProfile(userInfo));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<Profile> GetProfileById(string id)
+    {
+      Console.WriteLine(id);
+      try
+      {
+        return Ok(_ps.GetProfileById(id));
       }
       catch (System.Exception e)
       {

@@ -17,7 +17,7 @@ namespace keepr2.Services
 
     public Vault Create(Vault newVault)
     {
-      // newVault = _repo.Create(newVault);
+      newVault.Id = _repo.Create(newVault);
       return newVault;
     }
 
@@ -26,9 +26,9 @@ namespace keepr2.Services
       return _repo.Get();
     }
 
-    // internal IEnumerable<Vault> GetVaultsByProfile(string profId, string userId)
-    // {
-    //   return _repo.getVaultsByProfile(profId).ToList().FindAll(p => p.CreatorId == userId);
-    // }
+    internal IEnumerable<Vault> GetVaultsByProfile(string profId, string userId)
+    {
+      return _repo.getVaultsByProfile(profId).ToList().FindAll(p => p.CreatorId == userId);
+    }
   }
 }

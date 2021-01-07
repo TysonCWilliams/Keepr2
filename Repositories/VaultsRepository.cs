@@ -59,8 +59,14 @@ namespace keepr2.Repositories
 
     public IEnumerable<Vault> Get()
     {
-      string sql = populateCreator + "WHERE isPrivate = 1";
+      string sql = populateCreator;
+      // + "WHERE isPrivate = 1"
       return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, splitOn: "id");
     }
+    // public IEnumerable<Vault> Get()
+    // {
+    //   string sql = "SELECT * from vaults";
+    //   return _db.Query<Vault>(sql);
+    // }
   }
 }

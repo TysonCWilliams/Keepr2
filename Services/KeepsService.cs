@@ -33,7 +33,7 @@ namespace keepr2.Services
 
     internal Keep Edit(Keep editData, string userId)
     {
-      Keep original = _repo.GetOne(editData.Id);
+      Keep original = _repo.GetKeepById(editData.Id);
       if (original == null) { throw new Exception("Bad Id"); }
       if (original.CreatorId != userId)
       {
@@ -41,8 +41,28 @@ namespace keepr2.Services
       }
       _repo.Edit(editData);
 
-      return _repo.GetOne(editData.Id);
+      return _repo.GetKeepById(editData.Id);
 
     }
+
+    public string GetKeepById(string Id)
+    {
+      return _repo.GetKeepById(Id);
+    }
+
+    // internal string Delete(int id, string userId)
+    // {
+    //   Keep original = _repo.Get(id);
+    //   if (original == null) { throw new Exception("Bad Id"); }
+    //   if (original.CreatorId != userId)
+    //   {
+    //     throw new Exception("Not the User : Access Denied");
+    //   }
+    //   if (_repo.Remove(id))
+    //   {
+    //     return "deleted succesfully";
+    //   }
+    //   return "did not remove succesfully";
+    // }
   }
 }
