@@ -67,17 +67,17 @@ namespace keepr2.Controllers
       }
     }
 
-    [HttpGet("{vaultId}/vaultKeeps")]
-    public ActionResult<IEnumerable<Keep>> Get(int vaultId)
-    {
-      try
-      {
-        return Ok(_vks.GetKeepsByVaultId(vaultId));
-      }
-      catch (System.Exception e)
-      {
-        return BadRequest(e.Message);
-      }
-    }
+    // [HttpGet("{vaultId}/vaultKeeps")]
+    // public ActionResult<IEnumerable<Keep>> Get(int vaultId)
+    // {
+    //   try
+    //   {
+    //     return Ok(_vks.GetKeepsByVaultId(vaultId));
+    //   }
+    //   catch (System.Exception e)
+    //   {
+    //     return BadRequest(e.Message);
+    //   }
+    // }
   }
 }

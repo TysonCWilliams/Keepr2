@@ -16,38 +16,91 @@
         </h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col-4 mt-3">
-        <h4>Vaults</h4>
-        <button type="button"
-                style="display: block;"
-                @click="toggleModal()"
-                class="btn btn-light"
-                data-toggle="modal"
-                data-target="#form"
-        >
-          <i class="fas fa-plus-square fa-2x fa-spin"></i>
-        </button>
+    <div class="row ml-2 mt-4">
+      <h3 class="mt-2">
+        Vaults:
+      </h3>
+      <button type="button"
+              style="display: block;"
+              @click="toggleVaultModal()"
+              class="btn btn-light ml-3 mb-3"
+              data-toggle="modal"
+              data-target="#form"
+      >
+        <i class="fas fa-plus-square fa-2x fa-spin"></i>
+      </button>
+    </div>
+    <vault-component v-for="vault in vaults" :vault-prop="vault" :key="vault.id"></vault-component>
+
+    <div style="display: block !important;"
+         v-if="state.showVaultModal"
+         class="modal fade show"
+         id="form"
+         tabindex="-1"
+         role="dialog"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header border-bottom-0">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Create Vault
+            </h5>
+            <button @click="toggleVaultModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="vault-name">Name</label>
+                <input type="text"
+                       v-model="state.newVault.name"
+                       class="form-control"
+                       id="vault-name"
+                       aria-describedby="vault-name"
+                       placeholder="Enter Vault Name..."
+                >
+              </div>
+              <div class="form-group">
+                <label for="vault-description">Description</label>
+                <input type="text"
+                       v-model="state.newVault.description"
+                       class="form-control"
+                       id="vault-description"
+                       placeholder="Description"
+                >
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="isPrivate" v-model="state.newVault.isPrivate">
+                <label class="form-check-label" for="isPrivate">Private?</label>
+              </div>
+            </div>
+            <div class="modal-footer border-top-0 d-flex justify-content-center">
+              <button type="submit" @click="createVault()" class="btn btn-success">
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-4">
-        <h4>Keeps</h4>
-        <button type="button"
-                style="display: block;"
-                @click="toggleModal()"
-                class="btn btn-light"
-                data-toggle="modal"
-                data-target="#form"
-        >
-          <i class="fas fa-plus-square fa-2x fa-spin"></i>
-        </button>
-      </div>
+    <div class="row ml-2 mt-4">
+      <h4 class="mt-2">
+        Keeps
+      </h4>
+      <button type="button"
+              style="display: block;"
+              @click="toggleKeepModal()"
+              class="btn btn-light ml-3 mb-3"
+              data-toggle="modal"
+              data-target="#form"
+      >
+        <i class="fas fa-plus-square fa-2x fa-spin"></i>
+      </button>
     </div>
 
     <div style="display: block !important;"
-         v-if="state.showModal"
+         v-if="state.showKeepModal"
          class="modal fade show"
          id="form"
          tabindex="-1"
@@ -61,7 +114,7 @@
             <h5 class="modal-title" id="exampleModalLabel">
               Create Keep
             </h5>
-            <button @click="toggleModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button @click="toggleKeepModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -117,6 +170,8 @@ import { keepsService } from '../services/KeepsService'
 import { profilesService } from '../services/ProfilesService'
 import { KeepComponent } from '../components/KeepComponent.vue'
 import { vaultsService } from '../services/VaultsService'
+import { VaultComponent } from '../components/VaultComponent.vue'
+
 export default {
   name: 'Profile',
   setup() {
@@ -125,12 +180,13 @@ export default {
         await profilesService.getProfile()
       }
       await keepsService.getMyKeeps()
-      console.log(AppState.keeps)
+      // console.log(AppState.keeps)
+      await vaultsService.getPublicVaults()
     })
     const state = reactive({
-      showModal: false,
+      showKeepModal: false,
 
-      // showVaultModel: false,
+      showVaultModel: false,
 
       newKeep: {
         name: '',
@@ -156,18 +212,18 @@ export default {
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
 
-      toggleModal() {
-        state.showModal = !state.showModal
-        console.log('Modal: ' + state.showModal)
+      toggleKeepModal() {
+        state.showKeepModal = !state.showKeepModal
+        // console.log('Modal: ' + state.showModal)
       },
-      // toggleVaultModal() {
-      //   state.showVaultModal = !state.showVaultModal
-      //   console.log('Modal: ' + state.showVaultModal)
-      // },
+      toggleVaultModal() {
+        state.showVaultModal = !state.showVaultModal
+        // console.log('Modal: ' + state.showVaultModal)
+      }
 
-      components: { KeepComponent }
     }
-  }
+  },
+  components: { KeepComponent, VaultComponent }
 }
 </script>
 

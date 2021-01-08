@@ -22,11 +22,6 @@ const routes = [
     component: loadPage('ProfilePage'),
     beforeEnter: authGuard
   },
-  // {
-  //   path: '/keepDetails/:keepId',
-  //   name: 'KeepDetailsPage',
-  //   component: loadPage('KeepDetailsPage')
-  // },
   {
     path: '/vaultDetails/:vaultId',
     name: 'VaultDetailsPage',

@@ -1,4 +1,4 @@
-USE tdub08;
+-- USE tdub08;
 
 -- CREATE TABLE profiles (
 --     id VARCHAR(255) NOT NULL,
@@ -59,3 +59,4 @@ USE tdub08;
 
 -- DROP TABLE keeps;
 -- DROP TABLE vaults;
+-- DROP TABLE profiles;

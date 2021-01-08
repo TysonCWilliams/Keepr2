@@ -45,10 +45,10 @@ namespace keepr2.Services
 
     }
 
-    public string GetKeepById(string Id)
-    {
-      return _repo.GetKeepById(Id);
-    }
+    // public string GetKeepById(string Id)
+    // {
+    //   return _repo.GetKeepById(Id);
+    // }
 
     // internal string Delete(int id, string userId)
     // {

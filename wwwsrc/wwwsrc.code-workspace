@@ -29,12 +29,12 @@
     "explorer.confirmDragAndDrop": false,
     "vetur.format.defaultFormatter.js": "vscode-typescript",
     "eslint.alwaysShowStatus": true,
-    "eslint.format.enable": true,
     "eslint.lintTask.enable": true,
     "eslint.codeActionsOnSave.mode": "all",
     "editor.codeActionsOnSave": {
       "source.fixAll": true
     },
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "eslint.run": "onSave"
   }
 }

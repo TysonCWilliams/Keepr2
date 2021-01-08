@@ -2,42 +2,44 @@ using System;
 using System.Data;
 using Dapper;
 using keepr2.Models;
+using System.Threading.Tasks;
+
 
 namespace keepr2.Repositories
 {
-    public class ProfilesRepository
+  public class ProfilesRepository
+  {
+    private readonly IDbConnection _db;
+
+    public ProfilesRepository(IDbConnection db)
     {
-        private readonly IDbConnection _db;
+      _db = db;
+    }
 
-        public ProfilesRepository(IDbConnection db)
-        {
-            _db = db;
-        }
+    public Profile GetByEmail(string email)
+    {
+      string sql = "SELECT * FROM profiles WHERE email = @Email";
+      return _db.QueryFirstOrDefault<Profile>(sql, new { email });
+    }
 
-        public Profile GetByEmail(string email)
-        {
-            string sql = "SELECT * FROM profiles WHERE email = @Email";
-            return _db.QueryFirstOrDefault<Profile>(sql, new { email });
-        }
-
-        public Profile Create(Profile userInfo)
-        {
-            string sql = @"
+    public Profile Create(Profile userInfo)
+    {
+      string sql = @"
             INSERT INTO profiles
             (name, picture, email, id)
             VALUES
             (@Name, @Picture, @Email, @Id)";
-            _db.Execute(sql, userInfo);
-            return userInfo;
+      _db.Execute(sql, userInfo);
+      return userInfo;
 
-        }
-        
+    }
 
-        internal Profile GetProfileById(string id)
+
+    public async Task<Profile> GetProfileById(string id)
     {
-      string sql = @"SELECT * from profile WHERE id = @id";
-      return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+      string sql = @"SELECT * from profiles WHERE id = @id";
+      return await _db.QueryFirstOrDefaultAsync<Profile>(sql, new { id });
     }
 
-    }
+  }
 }

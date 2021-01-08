@@ -1,5 +1,5 @@
-<!-- <template>
-  <div class="vaultPage container-fluid justify-content-center">
+<template>
+  <div class="vaultDetailsPage container-fluid justify-content-center">
     <h1>{{ vault.title }}</h1>
   </div>
 </template>
@@ -8,16 +8,17 @@
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
-import { keepsService } from '../services/KeepsService'
+import { vaultsService } from '../services/VaultsService'
 export default {
-  name: 'VaultPage',
+  name: 'VaultDetailsPage',
   setup(props) {
     const route = useRoute()
     onMounted(async() => {
-
+      // console.log(route.params)
+      await vaultsService.getVaultDetails(route.params.vaultId)
     })
     return {
-
+      vaultDetails: computed(() => AppState.vaultDetails)
     }
   },
   components: {}
@@ -26,4 +27,4 @@ export default {
 
 <style lang="scss" scoped>
 
-</style> -->
+</style>

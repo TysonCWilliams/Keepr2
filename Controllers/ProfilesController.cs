@@ -40,12 +40,16 @@ namespace keepr2.Controllers
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Profile> GetProfileById(string id)
+    public async Task<ActionResult<Profile>> GetProfileById(string id)
     {
       Console.WriteLine(id);
       try
       {
-        return Ok(_ps.GetProfileById(id));
+        var result = await _ps.GetProfileById(id);
+
+        if (result == null) return NotFound();
+
+        return result;
       }
       catch (System.Exception e)
       {
