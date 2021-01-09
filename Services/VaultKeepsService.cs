@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using keepr2.Models;
 using keepr2.Repositories;
+using System.Threading.Tasks;
 
 namespace keepr2.Services
 {
@@ -15,10 +16,10 @@ namespace keepr2.Services
       _repo = repo;
     }
 
-    public VaultKeep Create(VaultKeep newVk)
+    public async Task<VaultKeep> Create(VaultKeep newVk)
     {
-      newVk.Id = _repo.Create(newVk);
-      return newVk;
+      var result = await _repo.Create(newVk);
+      return result;
     }
 
     internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)

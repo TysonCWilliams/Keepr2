@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using keepr2.Models;
 using keepr2.Repositories;
+using System.Threading.Tasks;
 
 namespace keepr2.Services
 {
@@ -31,24 +32,30 @@ namespace keepr2.Services
       return _repo.getKeepsByProfile(profId).ToList().FindAll(p => p.CreatorId == userId);
     }
 
-    internal Keep Edit(Keep editData, string userId)
+    // internal Keep Edit(Keep editData, string userId)
+    // {
+    //   Keep original = _repo.GetKeepById(editData.Id);
+    //   if (original == null) { throw new Exception("Bad Id"); }
+    //   if (original.CreatorId != userId)
+    //   {
+    //     throw new Exception("Not the User : Access Denied");
+    //   }
+    //   _repo.Edit(editData);
+
+    //   return _repo.GetKeepById(editData.Id);
+
+    // }
+
+    public async Task<Keep> GetKeepById(string Id)
     {
-      Keep original = _repo.GetKeepById(editData.Id);
-      if (original == null) { throw new Exception("Bad Id"); }
-      if (original.CreatorId != userId)
-      {
-        throw new Exception("Not the User : Access Denied");
-      }
-      _repo.Edit(editData);
-
-      return _repo.GetKeepById(editData.Id);
-
+      return await _repo.GetKeepById(Id);
     }
 
-    // public string GetKeepById(string Id)
-    // {
-    //   return _repo.GetKeepById(Id);
-    // }
+    public async Task<int> DeleteKeepById(string Id)
+    {
+      var result = await _repo.DeleteKeepById(Id);
+      return result;
+    }
 
     // internal string Delete(int id, string userId)
     // {

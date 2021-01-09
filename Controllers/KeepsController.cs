@@ -62,7 +62,8 @@ namespace keepr2.Controllers
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         //helpful to check in service if creator is whoever is logged in
         editData.Id = id;
-        return Ok(_ks.Edit(editData, userInfo.Id));
+        // return Ok(_ks.Edit(editData, userInfo.Id));
+        return Ok(null);
       }
       catch (System.Exception e)
       {
@@ -70,18 +71,33 @@ namespace keepr2.Controllers
       }
     }
 
-    // [HttpGet("{Id}")]
-    // public async Task<ActionResult<Keep>> Get(string keepId)
-    // {
-    //   try
-    //   {
-    //     return Ok(_ks.GetKeepById(keepId));
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
-    // }
+    [HttpGet("{Id}")]
+    public async Task<ActionResult<Keep>> GetKeepById(string Id)
+    {
+      try
+      {
+        var result = await _ks.GetKeepById(Id);
+        return Ok(result);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [HttpDelete("{Id}")]
+    public async Task<ActionResult<Boolean>> DeleteKeepById(string Id)
+    {
+      try
+      {
+        var result = await _ks.DeleteKeepById(Id);
+        return Ok(result > 0 ? null : false);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
 
     // [Authorize]
     // [HttpDelete("{id}")]

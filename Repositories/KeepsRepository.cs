@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using keepr2.Models;
+using System.Threading.Tasks;
 
 namespace keepr2.Repositories
 {
@@ -50,10 +51,19 @@ namespace keepr2.Repositories
       return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { profId }, splitOn: "id");
     }
 
-    internal Keep GetKeepById(int id)
+    public async Task<Keep> GetKeepById(string id)
     {
       string sql = @"SELECT * from keeps WHERE id = @id";
-      return _db.QueryFirstOrDefault<Keep>(sql, new { id });
+
+      var results = await _db.QueryFirstOrDefaultAsync<Keep>(sql, new { id });
+
+      return results;
+    }
+
+    public async Task<int> DeleteKeepById(string id)
+    {
+      string sql = "DELETE from keeps WHERE id = @id";
+      return await _db.ExecuteAsync(sql, new { id });
     }
 
     internal void Edit(Keep editData)

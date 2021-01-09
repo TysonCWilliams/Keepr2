@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Dapper;
 using keepr2.Models;
+using System.Threading.Tasks;
 
 namespace keepr2.Repositories
 {
@@ -25,6 +26,15 @@ namespace keepr2.Repositories
             (@Name, @Description, @IsPrivate, @CreatorId);
             SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newVault);
+    }
+
+    public async Task<Vault> GetVaultById(string id)
+    {
+      string sql = @"SELECT * from vaults WHERE id = @id";
+
+      var results = await _db.QueryFirstOrDefaultAsync<Vault>(sql, new { id });
+
+      return results;
     }
 
     internal IEnumerable<Vault> getVaultsByProfile(string profId)

@@ -6,7 +6,7 @@
         {{ vaultProp.title }}
       </p>
     </div>
-    <!-- <button class="btn" style="" @click="navigateTo('/vaultDetails/' + vaultd)"></button> -->
+    <button class="btn" style="" @click="navigateTo('/vaultDetails/' + vaultd)"></button>
   </div>
 </template>
 
@@ -14,6 +14,8 @@
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import { vaultsService } from '../services/VaultsService'
+import router from '../router'
+
 export default {
   name: 'VaultComponent',
   props: ['vaultProp'],
@@ -29,6 +31,11 @@ export default {
 
       deleteVault() {
         vaultsService.deleteVault(props.vaultProp._id)
+      },
+
+      navigateTo(route) {
+        // console.log(route)
+        router.push(route)
       }
     }
   },

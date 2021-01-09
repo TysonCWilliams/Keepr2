@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using keepr2.Models;
 using keepr2.Repositories;
+using System.Threading.Tasks;
 
 namespace keepr2.Services
 {
@@ -25,6 +26,11 @@ namespace keepr2.Services
     public IEnumerable<Vault> Get()
     {
       return _repo.Get();
+    }
+
+    public async Task<Vault> GetVaultById(string Id)
+    {
+      return await _repo.GetVaultById(Id);
     }
 
     internal IEnumerable<Vault> GetVaultsByProfile(string profId, string userId)

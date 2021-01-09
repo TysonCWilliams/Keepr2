@@ -67,6 +67,20 @@ namespace keepr2.Controllers
       }
     }
 
+    [HttpGet("{Id}")]
+    public async Task<ActionResult<Keep>> GetVaultById(string Id)
+    {
+      try
+      {
+        var result = await _vs.GetVaultById(Id);
+        return Ok(result);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     // [HttpGet("{vaultId}/vaultKeeps")]
     // public ActionResult<IEnumerable<Keep>> Get(int vaultId)
     // {
