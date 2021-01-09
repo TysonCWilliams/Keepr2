@@ -27,7 +27,7 @@ namespace keepr2.Repositories
       var newId = await _db.ExecuteScalarAsync<int>(sql, newVk);
       Console.WriteLine(newId);
       string getNew = @"SELECT * from vaultkeeps WHERE id = @newId";
-      return _db.QueryFirstOrDefault<VaultKeep>(getNew, new { newId });
+      return await _db.QueryFirstOrDefaultAsync<VaultKeep>(getNew, new { newId });
     }
 
     internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)

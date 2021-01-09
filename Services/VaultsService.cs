@@ -28,6 +28,12 @@ namespace keepr2.Services
       return _repo.Get();
     }
 
+    public async Task<int> DeleteVaultById(string Id)
+    {
+      var result = await _repo.DeleteVaultById(Id);
+      return result;
+    }
+
     public async Task<Vault> GetVaultById(string Id)
     {
       return await _repo.GetVaultById(Id);

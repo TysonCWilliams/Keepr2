@@ -67,6 +67,12 @@ namespace keepr2.Repositories
       _db.Execute(sql, editData);
     }
 
+    public async Task<int> DeleteVaultById(string id)
+    {
+      string sql = "DELETE from vaults WHERE id = @id";
+      return await _db.ExecuteAsync(sql, new { id });
+    }
+
     public IEnumerable<Vault> Get()
     {
       string sql = populateCreator;
