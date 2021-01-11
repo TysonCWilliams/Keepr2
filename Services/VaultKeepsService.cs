@@ -23,9 +23,10 @@ namespace keepr2.Services
       return result;
     }
 
-    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
+    public async Task<IEnumerable<Keep>> GetKeepsByVaultId(int vaultId)
     {
-      return _repo.GetKeepsByVaultId(vaultId);
+      var result = await _repo.GetKeepsByVaultId(vaultId);
+      return result;
 
     }
 

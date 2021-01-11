@@ -3,10 +3,12 @@
     <img src="https://i.pinimg.com/originals/09/bd/5b/09bd5b04107d4cc82fadeb7624bfcdb7.jpg" class="card-img-top" alt="">
     <div class="card-body">
       <p class="card-text">
-        {{ vaultProp.title }}
+        {{ vaultProp.name }}
       </p>
     </div>
-    <button class="btn" style="" @click="navigateTo('/vaultDetails/' + vaultd)"></button>
+    <button class="btn" style="" @click="navigateTo('/vaultDetails/' + vaultProp.id)">
+      {{ vaultProp.name }}
+    </button>
   </div>
 </template>
 

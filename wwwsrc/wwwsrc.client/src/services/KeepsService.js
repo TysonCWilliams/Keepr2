@@ -35,7 +35,19 @@ class KeepsService {
     try {
       logger.log(AppState.profile)
       const res = await api(`api/profiles/${AppState.profile.id}/keeps`)
-      AppState.keeps = res.data
+      return res.data
+      // NOTE dont forget to add your js doc types in the appstate
+      // AppState.keeps = res.data.map(e => new Keep(e.title, e.body))
+      // this now has intellisense on 'p' AppState.keeps.forEach(p=> p.)
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  async getAllKeepsForUser(id) {
+    try {
+      const res = await api(`api/profiles/${id}/keeps`)
+      return res.data
       // NOTE dont forget to add your js doc types in the appstate
       // AppState.keeps = res.data.map(e => new Keep(e.title, e.body))
       // this now has intellisense on 'p' AppState.keeps.forEach(p=> p.)

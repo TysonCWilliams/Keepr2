@@ -55,12 +55,28 @@ namespace keepr2.Controllers
     }
 
     [HttpGet("{Id}")]
+    [Authorize]
     public async Task<ActionResult<Keep>> GetVaultById(string Id)
     {
+      Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
       try
       {
         var result = await _vs.GetVaultById(Id);
-        return Ok(result);
+        if (result.CreatorId != userInfo.Id)
+        {
+          if (result.IsPrivate == true)
+          {
+            return Unauthorized("This doesn't belong to you!");
+          }
+          else
+          {
+            return Ok(result);
+          }
+        }
+        else
+        {
+          return Ok(result);
+        }
       }
       catch (System.Exception e)
       {
@@ -83,11 +99,30 @@ namespace keepr2.Controllers
     }
 
     [HttpGet("{vaultId}/keeps")]
-    public ActionResult<IEnumerable<Keep>> Get(int vaultId)
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<Keep>>> Get(int vaultId)
     {
+      Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
       try
       {
-        return Ok(_vks.GetKeepsByVaultId(vaultId));
+        var targetVault = await _vs.GetVaultById(vaultId.ToString());
+        if (targetVault.CreatorId != userInfo.Id)
+        {
+          if (targetVault.IsPrivate == true)
+          {
+            return Unauthorized("This doesn't belong to you!");
+          }
+          else
+          {
+            var result = await _vks.GetKeepsByVaultId(vaultId);
+            return Ok(result);
+          }
+        }
+        else
+        {
+          var result = await _vks.GetKeepsByVaultId(vaultId);
+          return Ok(result);
+        }
       }
       catch (System.Exception e)
       {

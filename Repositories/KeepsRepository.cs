@@ -103,5 +103,19 @@ namespace keepr2.Repositories
       int valid = _db.Execute(sql, new { id });
       return valid > 0;
     }
+
+    public async Task<IEnumerable<Keep>> GetAllKeepsForUser(string id)
+    {
+      string sql = @"SELECT * from keeps WHERE creatorId = @id";
+      var result = await _db.QueryAsync<Keep>(sql, new { id });
+      return result;
+    }
+
+    public async Task<IEnumerable<Keep>> GetAllPublicKeepsForUser(string id)
+    {
+      string sql = @"SELECT * from keeps WHERE creatorId = @id AND ID NOT IN (SELECT ID FROM vaultkeeps)";
+      var result = await _db.QueryAsync<Keep>(sql, new { id });
+      return result;
+    }
   }
 }

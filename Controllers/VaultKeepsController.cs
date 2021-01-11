@@ -35,6 +35,22 @@ namespace keepr2.Controllers
       }
     }
 
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<ActionResult<VaultKeep>> Get(int id)
+    {
+      try
+      {
+        Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
+        var result = await _vks.GetKeepsByVaultId(id);
+        return Ok(result);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult<string>> Delete(int id)

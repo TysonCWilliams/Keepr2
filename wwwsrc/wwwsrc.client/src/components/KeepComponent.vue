@@ -1,5 +1,5 @@
 <template>
-  <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', width: 'fit-content'}">
+  <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', maxWidth: 'fit-content'}">
     <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 18rem; height: 350px">
       <div class="container">
         <!-- <img :src="keep.img" class="card-img" alt="..."> -->
@@ -10,7 +10,7 @@
             {{ keep.name }}
           </div>
           <button style="float: right;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
-            <img class="img rounded" height="50" :src="keep.creator.picture" alt="">
+            <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
           </button>
         </div>
       </div>
@@ -54,7 +54,7 @@
                 Add to Vault
               </button>
               <div v-if="state.showVaultList" class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
-                <button @click="createVaultKeep(keep.id, vault.id), toggleShowVaultList()" class="dropdown-item" v-for="vault in vaults" :key="vault.id">
+                <button @click="createVaultKeep(keep.id, vault.id), toggleShowVaultList()" class="dropdown-item" v-for="vault in state.vaultOptions" :key="vault.id">
                   {{ vault.name }}
                 </button>
               </div>
@@ -67,11 +67,12 @@
   <!-- <img :src="user.picture" height="40" class="rounded" alt=""> -->
 </template>
 <script>
-import { computed, reactive } from 'vue'
+import { computed, onMounted, reactive } from 'vue'
 import { AppState } from '../AppState'
 import router from '../router'
 import { vaultsService } from '../services/VaultsService'
 import { keepsService } from '../services/KeepsService'
+import { profilesService } from '../services/ProfilesService'
 
 export default {
   name: 'KeepComponent',
@@ -79,10 +80,22 @@ export default {
   setup(props) {
     const state = reactive({
       showKeepModal: false,
-      showVaultList: false
-
+      showVaultList: false,
+      vaultOptions: []
     })
-
+    onMounted(() => {
+      setTimeout(() => {
+        profilesService.getProfile().then(() => {
+          vaultsService.getAllVaultsForUser(AppState.profile.id).then(res => {
+            console.log(res)
+            res.forEach((item, index) => {
+              item.creator = state.userProfile
+            })
+            state.vaultOptions = res
+          })
+        })
+      }, 4000)
+    })
     return {
       state,
       user: computed(() => AppState.user),
@@ -110,7 +123,6 @@ export default {
         vaultsService.createVaultKeep(newVk)
       },
       incrementViewCount(id) {
-        console.log(id)
         keepsService.incrementViewCount(id)
       }
 

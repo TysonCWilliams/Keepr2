@@ -39,6 +39,16 @@ namespace keepr2.Services
       return await _repo.GetVaultById(Id);
     }
 
+    public async Task<IEnumerable<Vault>> GetAllVaultsForUser(string Id)
+    {
+      return await _repo.GetAllVaultsForUser(Id);
+    }
+
+    public async Task<IEnumerable<Vault>> GetAllPublicVaultsForUser(string Id)
+    {
+      return await _repo.GetAllPublicVaultsForUser(Id);
+    }
+
     internal IEnumerable<Vault> GetVaultsByProfile(string profId, string userId)
     {
       return _repo.getVaultsByProfile(profId).ToList().FindAll(p => p.CreatorId == userId);

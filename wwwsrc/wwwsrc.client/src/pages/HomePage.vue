@@ -1,22 +1,15 @@
 <template>
-  <div class="home">
-    <!-- keeps -->
-    <div class="ml-2 mt-3"
-         style="flex-direction: column; width: 100vw; position: relative;  column-count: 4;
-  column-gap: 10px;"
+  <div style="height: 85vw; overflow-y: scroll;" class="row ml-2">
+    <div style="break-inside: avoid;"
+         class="col-4"
+         v-for="keep in keeps"
+         :key="keep.id"
     >
-      <div style="  display: grid;
-  grid-template-rows: 1fr auto; width: fit-content;  grid-row: 1 / -1;
-  grid-column: 1; break-inside: avoid;"
-           v-for="keep in keeps"
-           :key="keep.id"
-      >
-        <keep-component
+      <keep-component
 
-          :keep-prop="keep"
-          :key="keep.id"
-        ></keep-component>
-      </div>
+        :keep-prop="keep"
+        :key="keep.id"
+      ></keep-component>
     </div>
   </div>
 </template>

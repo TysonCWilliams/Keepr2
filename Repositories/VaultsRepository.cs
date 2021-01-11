@@ -77,12 +77,20 @@ namespace keepr2.Repositories
     {
       string sql = populateCreator;
       // + "WHERE isPrivate = 1"
-      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; return vault; }, splitOn: "id");
+      return _db.Query<Vault, Profile, Vault>(sql, (vault, profile) => { vault.Creator = profile; vault.IsPrivate = false; return vault; }, splitOn: "id");
     }
-    // public IEnumerable<Vault> Get()
-    // {
-    //   string sql = "SELECT * from vaults";
-    //   return _db.Query<Vault>(sql);
-    // }
+    public async Task<IEnumerable<Vault>> GetAllVaultsForUser(string id)
+    {
+      string sql = @"SELECT * from vaults WHERE creatorId = @id";
+      var result = await _db.QueryAsync<Vault>(sql, new { id });
+      return result;
+    }
+
+    public async Task<IEnumerable<Vault>> GetAllPublicVaultsForUser(string id)
+    {
+      string sql = @"SELECT * from vaults WHERE creatorId = @id AND isPrivate = 0";
+      var result = await _db.QueryAsync<Vault>(sql, new { id });
+      return result;
+    }
   }
 }

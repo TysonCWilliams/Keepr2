@@ -46,6 +46,16 @@ namespace keepr2.Services
 
     // }
 
+    public async Task<IEnumerable<Keep>> GetAllKeepsForUser(string Id)
+    {
+      return await _repo.GetAllKeepsForUser(Id);
+    }
+
+    public async Task<IEnumerable<Keep>> GetAllPublicKeepsForUser(string Id)
+    {
+      return await _repo.GetAllPublicKeepsForUser(Id);
+    }
+
     public async Task<Keep> GetKeepById(string Id)
     {
       return await _repo.GetKeepById(Id);

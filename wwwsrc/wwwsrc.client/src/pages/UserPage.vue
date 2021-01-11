@@ -9,12 +9,13 @@
           {{ state.userProfile.name }}
         </h2>
         <h4 class="mt-1 info-vk">
-          Vaults:
+          Vaults: {{ state.userVaults.length }}
         </h4>
+        <vault-component v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
         <h4 class="mt-1 info-vk">
-          Keeps:
+          Keeps: {{ state.userKeeps.length }}
         </h4>
-        <keep-component v-for="keep in keeps" :keep-prop="keep" :key="keep.id"></keep-component>
+        <keep-component v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
       </div>
     </div>
   </div>
@@ -26,21 +27,43 @@ import { AppState } from '../AppState'
 import router from '../router'
 import { profilesService } from '../services/ProfilesService'
 import { keepsService } from '../services/KeepsService'
+import { vaultsService } from '../services/VaultsService'
 import { KeepComponent } from '../components/KeepComponent.vue'
+import { useRoute } from 'vue-router'
 
 export default {
   name: 'UserPage',
   setup() {
-    // const route = useRoute()
+    const route = useRoute()
     const state = reactive({
-      userProfile: null
+      userProfile: null,
+      userKeeps: [],
+      userVaults: []
     })
-    onMounted(async() => {
-      const userProfile = await profilesService.getProfileById(router.currentRoute._value.params.userId)
-      // eslint-disable-next-line no-unused-expressions
-      state.userProfile = userProfile
+    onMounted(() => {
+      console.log(router)
 
-      await keepsService.getMyKeeps()
+      setTimeout(() => {
+        profilesService.getProfileById(route.params.userId).then(res => {
+          state.userProfile = res
+          vaultsService.getAllVaultsForUser(route.params.userId).then(res => {
+            console.log(res)
+            res.forEach((item, index) => {
+              item.creator = state.userProfile
+            })
+            state.userVaults = res
+          })
+
+          keepsService.getAllKeepsForUser(route.params.userId).then(res => {
+            console.log(res)
+            res.forEach((item, index) => {
+              item.creator = state.userProfile
+            })
+            state.userKeeps = res
+          })
+        })
+        // eslint-disable-next-line no-unused-expressions
+      }, 2000)
     })
     return {
       state,

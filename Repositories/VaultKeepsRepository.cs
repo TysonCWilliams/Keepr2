@@ -49,17 +49,21 @@ namespace keepr2.Repositories
 
     }
 
-    internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
+    public async Task<IEnumerable<Keep>> GetKeepsByVaultId(int vaultId)
     {
-      string sql = @"
-        SELECT k.*,
-        vk.id as VaultKeepId,
-        p.*
-        FROM vaultkeeps vk
-        JOIN keeps k ON k.id = vk.keepId
-        JOIN profiles p ON p.id = k.creatorId
-        WHERE vaultId = @cvaultId;";
-      return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { vaultId }, splitOn: "id");
+      // string sql = @"
+      //   SELECT k.*,
+      //   vk.id as VaultKeepId,
+      //   p.*
+      //   FROM vaultkeeps vk
+      //   JOIN keeps k ON k.id = vk.keepId
+      //   JOIN profiles p ON p.id = k.creatorId
+      //   WHERE vaultId = @cvaultId;";
+      // var result = await _db.QueryAsync<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { vaultId }, splitOn: "id");
+
+      string sql = @"SELECT * from keeps WHERE @vaultId IN (SELECT ID FROM vaults) AND ID IN (SELECT keepId FROM vaultkeeps)";
+      var result = await _db.QueryAsync<Keep>(sql, new { vaultId });
+      return result;
     }
 
     internal bool Remove(int id)

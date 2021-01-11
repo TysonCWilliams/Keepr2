@@ -8,11 +8,11 @@
         <h2 class="profile-title">
           {{ profile.name }}
         </h2>
-        <h4 class="mt-1 info-vk">
-          Vaults:
+        <h4 class="mt-1 info-vk" style="width: 140px;">
+          Vaults:  {{ state.myVaults.length }}
         </h4>
-        <h4 class="mt-1 info-vk">
-          Keeps:
+        <h4 class="mt-1 info-vk" style="width: 140px;">
+          Keeps:  {{ state.myKeeps.length }}
         </h4>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <i class="fas fa-plus-square fa-2x fa-spin"></i>
       </button>
     </div>
-    <vault-component v-for="vault in vaults" :vault-prop="vault" :key="vault.id"></vault-component>
+    <vault-component v-for="vault in state.myVaults" :vault-prop="vault" :key="vault.id"></vault-component>
 
     <div style="display: block !important;"
          v-if="state.showVaultModal"
@@ -159,7 +159,7 @@
       </div>
     </div>
 
-    <keep-component v-for="keep in keeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    <keep-component v-for="keep in state.myKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
   </div>
 </template>
 
@@ -179,11 +179,15 @@ export default {
       if (!AppState.profile.id) {
         await profilesService.getProfile()
       }
-      await keepsService.getMyKeeps()
-      // console.log(AppState.keeps)
-      await vaultsService.getPublicVaults()
+      const myKeeps = await keepsService.getMyKeeps()
+      state.myKeeps = myKeeps
+      const myVaults = await vaultsService.getAllVaultsForUser(AppState.profile.id)
+      console.log(myVaults)
+      state.myVaults = myVaults
     })
     const state = reactive({
+      myKeeps: [],
+      myVaults: [],
       showKeepModal: false,
 
       showVaultModel: false,

@@ -60,12 +60,23 @@ namespace keepr2.Controllers
     }
 
     [HttpGet("{id}/keeps")]
-    public async Task<ActionResult<Profile>> GetKeepsByProfile(string id)
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<Keep>>> GetKeepsByProfile(string id)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        return Ok(_ks.GetKeepsByProfile(id, userInfo?.Id));
+
+        if (userInfo.Id == id)
+        {
+          var result = await _ks.GetAllKeepsForUser(userInfo.Id);
+          return Ok(result);
+        }
+        else
+        {
+          var result = await _ks.GetAllPublicKeepsForUser(id);
+          return Ok(result);
+        }
       }
       catch (System.Exception e)
       {
@@ -75,12 +86,23 @@ namespace keepr2.Controllers
     }
 
     [HttpGet("{id}/vaults")]
-    public async Task<ActionResult<Profile>> GetVaultsByProfile(string id)
+    [Authorize]
+    public async Task<ActionResult<IEnumerable<Vault>>> GetVaultsByProfile(string id)
     {
       try
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
-        return Ok(_vs.GetVaultsByProfile(id, userInfo?.Id));
+
+        if (userInfo.Id == id)
+        {
+          var result = await _vs.GetAllVaultsForUser(userInfo.Id);
+          return Ok(result);
+        }
+        else
+        {
+          var result = await _vs.GetAllPublicVaultsForUser(id);
+          return Ok(result);
+        }
       }
       catch (System.Exception e)
       {
