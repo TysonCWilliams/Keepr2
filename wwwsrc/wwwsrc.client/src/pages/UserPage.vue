@@ -24,7 +24,7 @@
 <script>
 import { onMounted, computed, reactive } from 'vue'
 import { AppState } from '../AppState'
-import router from '../router'
+// import router from '../router'
 import { profilesService } from '../services/ProfilesService'
 import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
@@ -41,13 +41,11 @@ export default {
       userVaults: []
     })
     onMounted(() => {
-      console.log(router)
-
       setTimeout(() => {
         profilesService.getProfileById(route.params.userId).then(res => {
           state.userProfile = res
           vaultsService.getAllVaultsForUser(route.params.userId).then(res => {
-            console.log(res)
+            // console.log(res)
             res.forEach((item, index) => {
               item.creator = state.userProfile
             })
@@ -55,7 +53,7 @@ export default {
           })
 
           keepsService.getAllKeepsForUser(route.params.userId).then(res => {
-            console.log(res)
+            // console.log(res)
             res.forEach((item, index) => {
               item.creator = state.userProfile
             })
@@ -63,7 +61,7 @@ export default {
           })
         })
         // eslint-disable-next-line no-unused-expressions
-      }, 2000)
+      }, 3000)
     })
     return {
       state,

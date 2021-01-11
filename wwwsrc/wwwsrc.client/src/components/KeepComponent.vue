@@ -65,7 +65,6 @@
       </div>
     </div>
   </div>
-  <!-- <img :src="user.picture" height="40" class="rounded" alt=""> -->
 </template>
 <script>
 import { computed, onMounted, reactive } from 'vue'
@@ -88,7 +87,6 @@ export default {
       setTimeout(() => {
         profilesService.getProfile().then(() => {
           vaultsService.getAllVaultsForUser(AppState.profile.id).then(res => {
-            console.log(res)
             res.forEach((item, index) => {
               item.creator = state.userProfile
             })
@@ -105,12 +103,10 @@ export default {
       keep: computed(() => props.keepProp),
 
       navigateTo(route) {
-        // console.log(route)
         router.push(route)
       },
       toggleKeepModal() {
         state.showKeepModal = !state.showKeepModal
-        // console.log('Modal: ' + state.showModal)
       },
       toggleShowVaultList() {
         state.showVaultList = !state.showVaultList
@@ -120,7 +116,6 @@ export default {
           vaultId: vaultId,
           keepId: keepId
         }
-        console.log(newVk)
         vaultsService.createVaultKeep(newVk)
       },
       incrementViewCount(id) {

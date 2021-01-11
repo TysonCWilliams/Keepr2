@@ -190,7 +190,7 @@ export default {
       const myKeeps = await keepsService.getMyKeeps()
       state.myKeeps = myKeeps
       const myVaults = await vaultsService.getAllVaultsForUser(AppState.profile.id)
-      console.log(myVaults)
+      // console.log(myVaults)
       state.myVaults = myVaults
     })
     const state = reactive({

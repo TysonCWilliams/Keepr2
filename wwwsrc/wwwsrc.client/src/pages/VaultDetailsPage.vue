@@ -27,7 +27,7 @@ export default {
       setTimeout(() => {
         vaultsService.getVaultDetails(route.params.vaultId).then((res) => {
           state.vaultDetails = res
-          console.log(res)
+          // console.log(res)
           profilesService.getProfileById(res.creatorId).then(res => {
             state.userProfile = res
             vaultsService.getVaultKeeps(route.params.vaultId).then((res) => {

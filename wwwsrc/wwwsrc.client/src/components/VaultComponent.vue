@@ -36,7 +36,6 @@ export default {
       },
 
       navigateTo(route) {
-        // console.log(route)
         router.push(route)
       }
     }

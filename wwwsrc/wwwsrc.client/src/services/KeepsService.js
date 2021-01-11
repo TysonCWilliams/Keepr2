@@ -56,15 +56,6 @@ class KeepsService {
     }
   }
 
-  // async getKeepDetails(keepId) {
-  //   try {
-  //     const res = await api.get('api/keeps/' + keepId)
-  //     AppState.keepDetails = res.data
-  //   } catch (err) {
-  //     logger.error(err)
-  //   }
-  // }
-
   async deleteKeep(keepId) {
     try {
       await api.delete('api/keeps/' + keepId)
