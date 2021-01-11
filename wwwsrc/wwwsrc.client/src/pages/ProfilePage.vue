@@ -30,7 +30,11 @@
         <i class="fas fa-plus-square fa-2x fa-spin"></i>
       </button>
     </div>
-    <vault-component v-for="vault in state.myVaults" :vault-prop="vault" :key="vault.id"></vault-component>
+    <div class="row pr-1">
+      <div class="col-3" v-for="vault in state.myVaults" :key="vault.id">
+        <vault-component style="position: relative; max-width: 100%;" :vault-prop="vault"></vault-component>
+      </div>
+    </div>
 
     <div style="display: block !important;"
          v-if="state.showVaultModal"
@@ -159,7 +163,11 @@
       </div>
     </div>
 
-    <keep-component v-for="keep in state.myKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    <div class="row pr-1">
+      <div class="col-3" v-for="keep in state.myKeeps" :key="keep.id">
+        <keep-component style="position: relative; width: 100%;" :keep-prop="keep"></keep-component>
+      </div>
+    </div>
   </div>
 </template>
 

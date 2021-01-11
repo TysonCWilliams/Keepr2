@@ -1,15 +1,15 @@
 <template>
   <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', maxWidth: 'fit-content'}">
-    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 18rem; height: 350px">
+    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 16rem; height: 350px">
       <div class="container">
         <!-- <img :src="keep.img" class="card-img" alt="..."> -->
         <!-- <div class="card-title">
         </div> -->
         <div style="position:relative; width: 100%; margin-left: 15px; top: 275px;" class="row">
-          <div style="color: white" class="col-8">
+          <div style="color: white" class="col-6">
             {{ keep.name }}
           </div>
-          <button style="float: right;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
+          <button v-if="keep.creator" style="float: right;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
             <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
           </button>
         </div>
@@ -40,10 +40,11 @@
               Views:
               {{ keep.views }}
             </div>
-            <div class="mr-2">
+            <div v-if="keep.creator" class="mr-2">
               {{ keep.creator.name }}
             </div>
-            <img @click="navigateTo('/users/' + keep.creator.id)"
+            <img v-if="keep.creator"
+                 @click="navigateTo('/users/' + keep.creator.id)"
                  :src="keep.creator.picture"
                  height="40"
                  class="rounded"
