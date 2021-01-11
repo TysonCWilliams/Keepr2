@@ -16,28 +16,12 @@ namespace keepr2.Controllers
   public class VaultsController : ControllerBase
   {
     private readonly VaultsService _vs;
-    // private readonly VaultKeepsService _vks;
-    public VaultsController(VaultsService vs)
-    // ,VaultKeepsService vks
+    private readonly VaultKeepsService _vks;
+    public VaultsController(VaultsService vs, VaultKeepsService vks)
     {
       _vs = vs;
-      // _vks = vks;
+      _vks = vks;
     }
-
-    // [HttpPost]
-    // [Authorize]
-    // public ActionResult<Vault> Create([FromBody] Vault newVault)
-    // {
-    //   try
-    //   {
-    //     Vault created = _vs.Create(newVault);
-    //     return Ok(created);
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
-    // }
 
     [HttpPost]
     [Authorize]
@@ -47,7 +31,7 @@ namespace keepr2.Controllers
       {
         Profile userInfo = await HttpContext.GetUserInfoAsync<Profile>();
         newVault.CreatorId = userInfo.Id;
-        Vault created = _vs.Create(newVault);
+        Vault created = await _vs.Create(newVault);
         created.Creator = userInfo;
         return Ok(created);
       }
@@ -98,17 +82,17 @@ namespace keepr2.Controllers
       }
     }
 
-    // [HttpGet("{vaultId}/vaultKeeps")]
-    // public ActionResult<IEnumerable<Keep>> Get(int vaultId)
-    // {
-    //   try
-    //   {
-    //     return Ok(_vks.GetKeepsByVaultId(vaultId));
-    //   }
-    //   catch (System.Exception e)
-    //   {
-    //     return BadRequest(e.Message);
-    //   }
-    // }
+    [HttpGet("{vaultId}/keeps")]
+    public ActionResult<IEnumerable<Keep>> Get(int vaultId)
+    {
+      try
+      {
+        return Ok(_vks.GetKeepsByVaultId(vaultId));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
   }
 }

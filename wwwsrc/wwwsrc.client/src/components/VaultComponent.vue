@@ -1,6 +1,6 @@
 <template>
   <div class="card mt-3" style="width: 18rem; border-width: thick; border-color: chartreuse;">
-    <img src="https://cdn.hipwallpaper.com/i/1/55/zDTHLN.jpg" class="card-img-top" alt="">
+    <img src="https://i.pinimg.com/originals/09/bd/5b/09bd5b04107d4cc82fadeb7624bfcdb7.jpg" class="card-img-top" alt="">
     <div class="card-body">
       <p class="card-text">
         {{ vaultProp.title }}

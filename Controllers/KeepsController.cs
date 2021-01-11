@@ -71,6 +71,21 @@ namespace keepr2.Controllers
       }
     }
 
+    [HttpPut("{id}/views")]
+    [Authorize]
+    public async Task<ActionResult<Keep>> IncrementViews(int id)
+    {
+      try
+      {
+        var result = await _ks.IncrementViewCount(id);
+        return Ok(result);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
     [HttpGet("{Id}")]
     public async Task<ActionResult<Keep>> GetKeepById(string Id)
     {

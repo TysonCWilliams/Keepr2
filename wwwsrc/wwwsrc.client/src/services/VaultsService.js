@@ -22,6 +22,17 @@ class VaultsService {
     }
   }
 
+  async createVaultKeep(newVaultKeep) {
+    try {
+      const res = await api.post('api/vaultkeeps', newVaultKeep)
+      // this.getPublicVaults()
+      console.log(res)
+      return res
+    } catch (error) {
+      logger.log(error)
+    }
+  }
+
   async getPrivateVaults() {
     try {
       logger.log(AppState.profile)

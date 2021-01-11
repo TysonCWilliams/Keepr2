@@ -18,16 +18,35 @@ namespace keepr2.Repositories
 
     public async Task<VaultKeep> Create(VaultKeep newVk)
     {
-      string sql = @"
-        INSERT INTO vaultkeeps
-        (vaultId, keepId, creatorId)
-        VALUES
-        (@VaultId, @KeepId, @CreatorId);
-        SELECT LAST_INSERT_ID();";
-      var newId = await _db.ExecuteScalarAsync<int>(sql, newVk);
-      Console.WriteLine(newId);
-      string getNew = @"SELECT * from vaultkeeps WHERE id = @newId";
-      return await _db.QueryFirstOrDefaultAsync<VaultKeep>(getNew, new { newId });
+      Console.WriteLine(newVk);
+      string query = @"SELECT * from keeps WHERE id = @keepId";
+      int keepId = newVk.KeepId;
+      var keepToUpdate = await _db.QueryFirstOrDefaultAsync<Keep>(query, new { keepId });
+      int updatedCount = keepToUpdate.Keeps + 1;
+
+      string incrementKeeps = @"
+        UPDATE keeps
+        SET keeps = @UpdatedCount
+        WHERE id = @KeepId;";
+      var dictionary = new Dictionary<string, object>
+        {
+          { "@UpdatedCount", updatedCount },
+          { "@KeepId", keepId }
+        };
+      var parameters = new DynamicParameters(dictionary);
+      var result = await _db.ExecuteScalarAsync<Keep>(incrementKeeps, parameters);
+
+
+      var sql = @"INSERT INTO vaultkeeps(vaultId, keepId, creatorId) VALUES (@VaultId, @KeepId, @CreatorId); SELECT LAST_INSERT_ID()";
+      var lastInsertedId = await _db.ExecuteScalarAsync<int>(sql, new { CreatorId = newVk.CreatorId, VaultId = newVk.VaultId, KeepId = newVk.VaultId });
+
+      string getNewlyCreated = @"SELECT * from vaultkeeps WHERE id = @lastInsertedId";
+      return await _db.QueryFirstOrDefaultAsync<VaultKeep>(getNewlyCreated, new { lastInsertedId });
+
+      // var secondSql = @"INSERT INTO NewsDtl_Tbl(NewsId, DetailName, Details) VALUES (@Id, @DetailName, @Details)";
+      // var secondQuery = _db.ExecuteAsync(secondSql, new { Id = lastInsertedId, DetailName = n.DetailName, Details = n.Details });
+
+
     }
 
     internal IEnumerable<Keep> GetKeepsByVaultId(int vaultId)

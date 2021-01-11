@@ -22,6 +22,15 @@ class KeepsService {
     }
   }
 
+  async incrementViewCount(keepId) {
+    try {
+      await api.put('api/keeps/' + keepId + '/views')
+      this.getMyKeeps()
+    } catch (error) {
+      logger.log(error)
+    }
+  }
+
   async getMyKeeps() {
     try {
       logger.log(AppState.profile)

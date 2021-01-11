@@ -17,7 +17,7 @@ namespace keepr2.Repositories
       _db = db;
     }
 
-    public int Create(Vault newVault)
+    public async Task<int> Create(Vault newVault)
     {
       string sql = @"
             INSERT INTO vaults 
@@ -25,7 +25,7 @@ namespace keepr2.Repositories
             VALUES
             (@Name, @Description, @IsPrivate, @CreatorId);
             SELECT LAST_INSERT_ID();";
-      return _db.ExecuteScalar<int>(sql, newVault);
+      return await _db.ExecuteScalarAsync<int>(sql, newVault);
     }
 
     public async Task<Vault> GetVaultById(string id)

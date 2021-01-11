@@ -57,7 +57,7 @@ CREATE TABLE vaultkeeps(
 
 )
 
--- DROP TABLE keeps;
--- DROP TABLE vaults;
--- DROP TABLE profiles;
 -- DROP TABLE vaultkeeps;
+-- DROP TABLE vaults;
+-- DROP TABLE keeps;
+-- DROP TABLE profiles;

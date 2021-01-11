@@ -17,9 +17,9 @@ namespace keepr2.Services
       _repo = repo;
     }
 
-    public Vault Create(Vault newVault)
+    public async Task<Vault> Create(Vault newVault)
     {
-      newVault.Id = _repo.Create(newVault);
+      newVault.Id = await _repo.Create(newVault);
       return newVault;
     }
 

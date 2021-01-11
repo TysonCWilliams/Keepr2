@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <div class="container">
-      <div class="card mt-3 ml-2" style="width: 18rem;">
-        <img :src="keep.img" class="card-img" alt="...">
+  <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', width: 'fit-content'}">
+    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 18rem; height: 350px">
+      <div class="container">
+        <!-- <img :src="keep.img" class="card-img" alt="..."> -->
         <!-- <div class="card-title">
         </div> -->
-        <button class="btn" @click="toggleKeepModal()">
-          {{ keep.name }}
-        </button>
+        <div style="position:relative; width: 100%; margin-left: 15px; top: 275px;" class="row">
+          <div style="color: white" class="col-8">
+            {{ keep.name }}
+          </div>
+          <button style="float: right;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
+            <img class="img rounded" height="50" :src="keep.creator.picture" alt="">
+          </button>
+        </div>
       </div>
     </div>
 
@@ -27,15 +32,33 @@
             <img :src="keep.img" style="position: relative; width: 100%" alt="">
           </div>
           <div class="modal-footer">
+            <div class="mr-2">
+              Keeps:
+              {{ keep.keeps }}
+            </div>
+            <div class="mr-2">
+              Views:
+              {{ keep.views }}
+            </div>
+            <div class="mr-2">
+              {{ keep.creator.name }}
+            </div>
             <img @click="navigateTo('/users/' + keep.creator.id)"
                  :src="keep.creator.picture"
                  height="40"
                  class="rounded"
                  alt=""
             >
-            <button type="button" class="btn btn-outline-info">
-              Add to Vault
-            </button>
+            <div class="dropdown">
+              <button @click="toggleShowVaultList()" type="button" class="btn btn-outline-info">
+                Add to Vault
+              </button>
+              <div v-if="state.showVaultList" class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
+                <button @click="createVaultKeep(keep.id, vault.id), toggleShowVaultList()" class="dropdown-item" v-for="vault in vaults" :key="vault.id">
+                  {{ vault.name }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -47,19 +70,23 @@
 import { computed, reactive } from 'vue'
 import { AppState } from '../AppState'
 import router from '../router'
-// import { profilesService } from '../services/ProfilesService'
+import { vaultsService } from '../services/VaultsService'
+import { keepsService } from '../services/KeepsService'
 
 export default {
   name: 'KeepComponent',
   props: ['keepProp'],
   setup(props) {
     const state = reactive({
-      showKeepModal: false
+      showKeepModal: false,
+      showVaultList: false
+
     })
 
     return {
       state,
       user: computed(() => AppState.user),
+      vaults: computed(() => AppState.vaults),
       profile: computed(() => AppState.profile),
       keep: computed(() => props.keepProp),
 
@@ -70,6 +97,21 @@ export default {
       toggleKeepModal() {
         state.showKeepModal = !state.showKeepModal
         // console.log('Modal: ' + state.showModal)
+      },
+      toggleShowVaultList() {
+        state.showVaultList = !state.showVaultList
+      },
+      createVaultKeep(vaultId, keepId) {
+        const newVk = {
+          vaultId: vaultId,
+          keepId: keepId
+        }
+        console.log(newVk)
+        vaultsService.createVaultKeep(newVk)
+      },
+      incrementViewCount(id) {
+        console.log(id)
+        keepsService.incrementViewCount(id)
       }
 
       // deleteKeep() {
@@ -89,7 +131,7 @@ export default {
     border: solid;
     /* border-radius: 30px; */
     border-color: rgba(5, 5, 5, 0.938);
-    background-color: rgba(15, 15, 15, 0.164);
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,.75));
     opacity: 10;
   }
 </style>

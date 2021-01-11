@@ -28,15 +28,25 @@ namespace keepr2.Repositories
       return _db.ExecuteScalar<int>(sql, newKeep);
     }
 
-    public int IncrementViewCount(string keepId)
+    public async Task<Keep> IncrementViewCount(int keepId)
     {
+
+      string query = @"SELECT * from keeps WHERE id = @keepId";
+      var keepToUpdate = await _db.QueryFirstOrDefaultAsync<Keep>(query, new { keepId });
+      int updatedCount = keepToUpdate.Views + 1;
+
       string sql = @"
-            UPDATE  
-            (name, description, img, views, shares, keeps, creatorId)
-            VALUES
-            (@Name, @Description, @Img, @Views, @Shares, @Keeps, @CreatorId);
-            SELECT LAST_INSERT_ID();";
-      return _db.ExecuteScalar<int>(sql, keepId);
+        UPDATE keeps
+        SET views = @UpdatedCount
+        WHERE id = @KeepId;";
+      var dictionary = new Dictionary<string, object>
+        {
+          { "@UpdatedCount", updatedCount },
+          { "@KeepId", keepId }
+        };
+      var parameters = new DynamicParameters(dictionary);
+      var result = await _db.ExecuteScalarAsync<Keep>(sql, parameters);
+      return result;
     }
 
     internal IEnumerable<Keep> getKeepsByProfile(string profId)

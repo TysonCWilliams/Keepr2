@@ -19,6 +19,7 @@ namespace keepr2.Services
     public async Task<VaultKeep> Create(VaultKeep newVk)
     {
       var result = await _repo.Create(newVk);
+      Console.WriteLine(result);
       return result;
     }
 

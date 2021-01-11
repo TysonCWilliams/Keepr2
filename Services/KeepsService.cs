@@ -32,9 +32,9 @@ namespace keepr2.Services
       return _repo.getKeepsByProfile(profId).ToList().FindAll(p => p.CreatorId == userId);
     }
 
-    // internal Keep Edit(Keep editData, string userId)
+    // internal async Task<Keep Edit(Keep editData, string userId)
     // {
-    //   Keep original = _repo.GetKeepById(editData.Id);
+    //   Keep original = await _repo.GetKeepById(editData.Id);
     //   if (original == null) { throw new Exception("Bad Id"); }
     //   if (original.CreatorId != userId)
     //   {
@@ -51,25 +51,15 @@ namespace keepr2.Services
       return await _repo.GetKeepById(Id);
     }
 
+    public async Task<Keep> IncrementViewCount(int Id)
+    {
+      return await _repo.IncrementViewCount(Id);
+    }
+
     public async Task<int> DeleteKeepById(string Id)
     {
       var result = await _repo.DeleteKeepById(Id);
       return result;
     }
-
-    // internal string Delete(int id, string userId)
-    // {
-    //   Keep original = _repo.Get(id);
-    //   if (original == null) { throw new Exception("Bad Id"); }
-    //   if (original.CreatorId != userId)
-    //   {
-    //     throw new Exception("Not the User : Access Denied");
-    //   }
-    //   if (_repo.Remove(id))
-    //   {
-    //     return "deleted succesfully";
-    //   }
-    //   return "did not remove succesfully";
-    // }
   }
 }
