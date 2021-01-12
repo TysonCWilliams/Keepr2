@@ -1,12 +1,7 @@
 <template>
   <div class="card mt-3" style="width: 18rem; border-width: thick; border-color: chartreuse;">
     <img src="https://i.pinimg.com/originals/09/bd/5b/09bd5b04107d4cc82fadeb7624bfcdb7.jpg" class="card-img-top" alt="">
-    <div class="card-body">
-      <p class="card-text">
-        {{ vaultProp.name }}
-      </p>
-    </div>
-    <button class="btn" style="" @click="navigateTo('/vaultDetails/' + vaultProp.id)">
+    <button class="btn custom-class" style="border-color: black; border-style: solid; background-color: transparent;" @click="navigateTo('/vaultDetails/' + vaultProp.id)">
       {{ vaultProp.name }}
     </button>
   </div>
@@ -43,3 +38,12 @@ export default {
   components: {}
 }
 </script>
+
+<style lang="scss" scoped>
+.custom-class{
+  font-weight: bolder;
+  color: rgb(0, 255, 34);
+  text-shadow: transparent;
+}
+
+</style>

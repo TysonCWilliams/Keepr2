@@ -164,7 +164,7 @@
     </div>
 
     <div class="row pr-1">
-      <div class="col-3" v-for="keep in state.myKeeps" :key="keep.id">
+      <div class="ml-2" v-for="keep in state.myKeeps" :key="keep.id">
         <keep-component style="position: relative; width: 100%;" :keep-prop="keep"></keep-component>
       </div>
     </div>

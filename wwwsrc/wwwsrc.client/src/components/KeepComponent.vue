@@ -1,17 +1,14 @@
 <template>
   <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', maxWidth: 'fit-content'}">
-    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 16rem; height: 350px">
+    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 17rem; height: 350px;">
       <div class="container">
-        <!-- <img :src="keep.img" class="card-img" alt="..."> -->
-        <!-- <div class="card-title">
-        </div> -->
-        <div style="position:relative; width: 100%; margin-left: 15px; top: 275px;" class="row">
-          <div style="color: white" class="col-6">
+        <div style="position: relative; width: 100%; margin-left: 15px; top: 275px;" class="row custom-title">
+          <div class="">
+            <button v-if="keep.creator" style="float: right; margin-left: 120px;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
+              <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
+            </button>
             {{ keep.name }}
           </div>
-          <button v-if="keep.creator" style="float: right;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
-            <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
-          </button>
         </div>
       </div>
     </div>
@@ -20,14 +17,14 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
+            <h5 class="modal-title my-card-title" id="exampleModalLabel">
               {{ keep.name }}
             </h5>
             <button @click="toggleKeepModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body custom-desc">
             {{ keep.description }}
             <img :src="keep.img" style="position: relative; width: 100%" alt="">
           </div>
@@ -141,5 +138,29 @@ export default {
     border-color: rgba(5, 5, 5, 0.938);
     background: linear-gradient(180deg, transparent, rgba(0,0,0,.75));
     opacity: 10;
+  }
+
+  .custom-title{
+    color:rgb(187, 255, 0);
+    font-size: large;
+    font-weight: bolder;
+    font: x-large;
+    text-shadow: currentColor;
+  }
+
+  .my-card-title{
+    color: rgba(5, 5, 5, 0.952);
+    font: larger;
+    font-weight: bolder;
+    text-shadow: currentColor;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  }
+
+  .custom-desc{
+    color: rgb(7, 7, 7);
+    font-style: normal;
+    font-weight: bolder;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-shadow: currentColor;
   }
 </style>

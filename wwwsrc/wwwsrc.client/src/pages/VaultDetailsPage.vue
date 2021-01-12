@@ -42,7 +42,6 @@ export default {
     })
     return {
       state
-      // vaultDetails: computed(() => AppState.vaultDetails)
     }
   },
   components: {}

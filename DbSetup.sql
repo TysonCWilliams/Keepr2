@@ -1,4 +1,4 @@
-USE tdub08;
+-- USE tdub08;
 
 -- CREATE TABLE profiles (
 --     id VARCHAR(255) NOT NULL,
@@ -8,20 +8,20 @@ USE tdub08;
 --     PRIMARY KEY (id)
 -- )
 
-CREATE TABLE keeps (
-  id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
-  description VARCHAR(500) NOT NULL,
-  img VARCHAR(255) NOT NULL,
-  views INT NOT NULL,
-  shares INT NOT NULL,
-  keeps INT NOT NULL,
-  creatorId VARCHAR(255) NOT NULL,
-  PRIMARY KEY (id),
-  FOREIGN KEY (creatorId)
-      REFERENCES profiles(id)
-      ON DELETE CASCADE
-)
+-- CREATE TABLE keeps (
+--   id INT NOT NULL AUTO_INCREMENT,
+--   name VARCHAR(255) NOT NULL,
+--   description VARCHAR(500) NOT NULL,
+--   img VARCHAR(255) NOT NULL,
+--   views INT NOT NULL,
+--   shares INT NOT NULL,
+--   keeps INT NOT NULL,
+--   creatorId VARCHAR(255) NOT NULL,
+--   PRIMARY KEY (id),
+--   FOREIGN KEY (creatorId)
+--       REFERENCES profiles(id)
+--       ON DELETE CASCADE
+-- )
 
 -- CREATE TABLE vaults (
 --   id INT NOT NULL AUTO_INCREMENT,
@@ -57,5 +57,7 @@ CREATE TABLE keeps (
 
 -- )
 
-DROP TABLE keeps;
+-- DROP TABLE vaultkeeps;
 -- DROP TABLE vaults;
+-- DROP TABLE keeps;
+-- DROP TABLE profiles;

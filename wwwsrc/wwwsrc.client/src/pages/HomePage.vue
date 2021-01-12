@@ -1,15 +1,17 @@
 <template>
-  <div style="height: 85vw; overflow-y: scroll;" class="row ml-2">
-    <div style="break-inside: avoid;"
-         class="col-4"
-         v-for="keep in keeps"
-         :key="keep.id"
-    >
-      <keep-component
+  <div class="row">
+    <div style="height: 85vw; overflow-y: scroll;" class="ml-2">
+      <div style="break-inside: avoid;"
+           class="card-body"
+           v-for="keep in keeps"
+           :key="keep.id"
+      >
+        <keep-component
 
-        :keep-prop="keep"
-        :key="keep.id"
-      ></keep-component>
+          :keep-prop="keep"
+          :key="keep.id"
+        ></keep-component>
+      </div>
     </div>
   </div>
 </template>
@@ -44,8 +46,8 @@ export default {
     user-select: none;
   }
 
-  img {
-    height: 150px;
-    width: 150px;
-  }
+  // img {
+  //   height: 150px;
+  //   width: 150px;
+  // }
 </style>

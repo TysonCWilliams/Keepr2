@@ -1,20 +1,38 @@
 <template>
   <div v-if="state.userProfile" class="profile text-center container-fluid">
-    <div class="row justify-content-left">
-      <div class="col-2 mt-3 ml-3">
+    <div class="row">
+      <div class="col-3 mt-3 ml-3">
         <img class="rounded" :src="state.userProfile.picture" alt="">
       </div>
       <div class="col-2 mt-4">
         <h2 class="profile-title">
           {{ state.userProfile.name }}
         </h2>
-        <h4 class="mt-1 info-vk">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <h4 class="mt-5 info-vk text-center">
           Vaults: {{ state.userVaults.length }}
         </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
         <vault-component v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
-        <h4 class="mt-1 info-vk">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-2">
+        <h4 class="mt-4 info-vk text-center">
           Keeps: {{ state.userKeeps.length }}
         </h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
         <keep-component v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
       </div>
     </div>
@@ -24,11 +42,11 @@
 <script>
 import { onMounted, computed, reactive } from 'vue'
 import { AppState } from '../AppState'
-// import router from '../router'
 import { profilesService } from '../services/ProfilesService'
 import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
 import { KeepComponent } from '../components/KeepComponent.vue'
+import { VaultComponent } from '../components/VaultComponent.vue'
 import { useRoute } from 'vue-router'
 
 export default {
@@ -60,7 +78,6 @@ export default {
             state.userKeeps = res
           })
         })
-        // eslint-disable-next-line no-unused-expressions
       }, 3000)
     })
     return {
@@ -68,7 +85,7 @@ export default {
       keeps: computed(() => AppState.keeps)
     }
   },
-  components: { KeepComponent }
+  components: { KeepComponent, VaultComponent }
 }
 </script>
 
