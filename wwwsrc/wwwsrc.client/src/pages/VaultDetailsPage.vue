@@ -1,6 +1,9 @@
 <template>
   <div v-if="state.vaultDetails" class="vaultDetailsPage container-fluid justify-content-center">
     <h1>{{ state.vaultDetails.name }}</h1>
+    <h3>
+      {{ state.vaultDetails.description }}
+    </h3>
     <h4 class="mt-1 info-vk">
       Keeps: {{ state.vaultKeeps.length }}
     </h4>

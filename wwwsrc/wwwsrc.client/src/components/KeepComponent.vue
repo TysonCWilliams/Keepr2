@@ -108,7 +108,7 @@ export default {
       toggleShowVaultList() {
         state.showVaultList = !state.showVaultList
       },
-      createVaultKeep(vaultId, keepId) {
+      createVaultKeep(keepId, vaultId) {
         const newVk = {
           vaultId: vaultId,
           keepId: keepId
