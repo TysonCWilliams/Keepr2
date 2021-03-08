@@ -52,7 +52,7 @@
                 Add to Vault
               </button>
               <div v-if="state.showVaultList" class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
-                <button @click="createVaultKeep(keep.id, vault.id), toggleShowVaultList()" class="dropdown-item" v-for="vault in state.vaultOptions" :key="vault.id">
+                <button @click="createVaultKeep(keep, vault), toggleShowVaultList()" class="dropdown-item" v-for="vault in state.vaultOptions" :key="vault.id">
                   {{ vault.name }}
                 </button>
               </div>
@@ -108,11 +108,13 @@ export default {
       toggleShowVaultList() {
         state.showVaultList = !state.showVaultList
       },
-      createVaultKeep(keepId, vaultId) {
+      createVaultKeep(keep, vault) {
         const newVk = {
-          vaultId: vaultId,
-          keepId: keepId
+          vaultId: vault.id,
+          keepId: keep.id
         }
+        console.log(newVk)
+
         vaultsService.createVaultKeep(newVk)
       },
       incrementViewCount(id) {

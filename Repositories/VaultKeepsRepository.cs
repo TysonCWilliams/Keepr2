@@ -21,6 +21,7 @@ namespace keepr2.Repositories
       Console.WriteLine(newVk);
       string query = @"SELECT * from keeps WHERE id = @keepId";
       int keepId = newVk.KeepId;
+      Console.WriteLine(newVk);
       var keepToUpdate = await _db.QueryFirstOrDefaultAsync<Keep>(query, new { keepId });
       int updatedCount = keepToUpdate.Keeps + 1;
 
@@ -38,7 +39,7 @@ namespace keepr2.Repositories
 
 
       var sql = @"INSERT INTO vaultkeeps(vaultId, keepId, creatorId) VALUES (@VaultId, @KeepId, @CreatorId); SELECT LAST_INSERT_ID()";
-      var lastInsertedId = await _db.ExecuteScalarAsync<int>(sql, new { CreatorId = newVk.CreatorId, VaultId = newVk.VaultId, KeepId = newVk.VaultId });
+      var lastInsertedId = await _db.ExecuteScalarAsync<int>(sql, new { CreatorId = newVk.CreatorId, VaultId = newVk.VaultId, KeepId = newVk.KeepId });
 
       string getNewlyCreated = @"SELECT * from vaultkeeps WHERE id = @lastInsertedId";
       return await _db.QueryFirstOrDefaultAsync<VaultKeep>(getNewlyCreated, new { lastInsertedId });
@@ -61,8 +62,20 @@ namespace keepr2.Repositories
       //   WHERE vaultId = @cvaultId;";
       // var result = await _db.QueryAsync<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (keep, profile) => { keep.Creator = profile; return keep; }, new { vaultId }, splitOn: "id");
 
-      string sql = @"SELECT * from keeps WHERE @vaultId IN (SELECT ID FROM vaults) AND ID IN (SELECT keepId FROM vaultkeeps)";
-      var result = await _db.QueryAsync<Keep>(sql, new { vaultId });
+      // string sql = @"SELECT * from keeps WHERE @vaultId IN (SELECT ID FROM vaults) AND ID IN (SELECT keepId FROM vaultkeeps)";
+      // var result = await _db.QueryAsync<Keep>(sql, new { vaultId });
+
+      string sql = @"
+                select vk.id as VaultKeepId, k.*, p.*
+                from vaultkeeps vk
+                join keeps k on k.id = vk.keepId
+                join profiles p on p.id = k.creatorId
+                where vk.vaultId = @vaultId";
+      var result = await _db.QueryAsync<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (keep, profile) =>
+      {
+        keep.Creator = profile;
+        return keep;
+      }, new { vaultId }, splitOn: "id");
       return result;
     }
 
