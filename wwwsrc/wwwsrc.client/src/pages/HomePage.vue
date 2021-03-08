@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div style="height: 85vw; overflow-y: scroll;" class="ml-2">
+    <div style="height: 100vw;" class="ml-2">
       <div style="break-inside: avoid;"
            class="card-body"
            v-for="keep in keeps"
