@@ -3,12 +3,12 @@
     <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 17rem; height: 350px;">
       <div class="container">
         <div style="position: relative; width: 100%; margin-left: 15px; top: 275px;" class="row custom-title">
-          <div class="">
-            <button v-if="keep.creator" style="float: right; margin-left: 120px;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
-              <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
-            </button>
+          <div class="mt-3">
             {{ keep.name }}
           </div>
+          <button v-if="keep.creator" style="float: right; margin-left: 160px; position: absolute;" class="btn" @click="navigateTo('/users/' + keep.creator.id)">
+            <img v-if="keep.creator" class="img rounded" height="50" :src="keep.creator.picture" alt="">
+          </button>
         </div>
       </div>
     </div>
@@ -137,7 +137,8 @@ export default {
     position: relative;
     border: solid;
     /* border-radius: 30px; */
-    border-color: rgba(5, 5, 5, 0.938);
+    border-color: rgba(0, 0, 0, 0.938);
+    box-shadow: 10px 10px 8px #000000;
     background: linear-gradient(180deg, transparent, rgba(0,0,0,.75));
     opacity: 10;
   }
@@ -147,7 +148,8 @@ export default {
     font-size: large;
     font-weight: bolder;
     font: x-large;
-    text-shadow: currentColor;
+    text-shadow: 0 0 3px #000000, 0 0 5px #00ff0d;
+    text-decoration: underline;
   }
 
   .my-card-title{

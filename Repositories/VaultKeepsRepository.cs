@@ -28,11 +28,11 @@ namespace keepr2.Repositories
       string incrementKeeps = @"
         UPDATE keeps
         SET keeps = @UpdatedCount
-        WHERE id = @KeepId;";
+        WHERE id = @keepId;";
       var dictionary = new Dictionary<string, object>
         {
           { "@UpdatedCount", updatedCount },
-          { "@KeepId", keepId }
+          { "@keepId", keepId }
         };
       var parameters = new DynamicParameters(dictionary);
       var result = await _db.ExecuteScalarAsync<Keep>(incrementKeeps, parameters);

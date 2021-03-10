@@ -1,11 +1,11 @@
 <template>
   <div class="profile text-center container-fluid">
-    <div class="row justify-content-left">
-      <div class="col-2 mt-3 ml-3">
+    <div class="row">
+      <div class="col-sm-1 col-lg-12 mt-3 ml-1">
         <img class="rounded" :src="profile.picture" alt="">
       </div>
-      <div class="col-2 mt-4">
-        <h2 class="profile-title">
+      <div class="col-sm-1 col-lg-12 mt-4">
+        <h2 class="profile-title mr-1">
           {{ profile.name }}
         </h2>
         <h4 class="mt-1 info-vk" style="width: 140px;">
@@ -30,8 +30,8 @@
         <i class="fas fa-plus-square fa-2x fa-spin"></i>
       </button>
     </div>
-    <div class="row pr-1">
-      <div class="col-3" v-for="vault in state.myVaults" :key="vault.id">
+    <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+      <div class="ml-2 mr-3 mt-3" v-for="vault in state.myVaults" :key="vault.id">
         <vault-component style="position: relative; max-width: 100%;" :vault-prop="vault"></vault-component>
       </div>
     </div>
@@ -163,8 +163,8 @@
       </div>
     </div>
 
-    <div class="row pr-1">
-      <div class="ml-2" v-for="keep in state.myKeeps" :key="keep.id">
+    <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+      <div class="ml-2 mr-3 mt-3" v-for="keep in state.myKeeps" :key="keep.id">
         <keep-component style="position: relative; width: 100%;" :keep-prop="keep"></keep-component>
       </div>
     </div>
@@ -240,9 +240,37 @@ export default {
 </script>
 
 <style scoped>
-  img {
-    max-width: 100px;
+
+.grid {
+    /* margin-top: 2vh; */
+    line-height: 40px;
+    column-count: 1;
   }
+
+  @media (min-width: 700px) {
+    .grid {
+      column-count: 2;
+    }
+  }
+  @media (min-width: 900px) {
+    .grid {
+      column-count: 3;
+    }
+  }
+  @media (min-width: 1100px) {
+    .grid {
+      column-count: 4;
+    }
+  }
+  @media (min-width: 1200px) {
+    .grid {
+      column-count: 5;
+    }
+  }
+
+  /* img {
+    max-width: 100px;
+  } */
 
   .card {
     border-color: aquamarine;

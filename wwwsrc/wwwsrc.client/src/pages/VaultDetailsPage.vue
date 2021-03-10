@@ -1,13 +1,17 @@
 <template>
-  <div v-if="state.vaultDetails" class="vaultDetailsPage container-fluid justify-content-center">
-    <h1>{{ state.vaultDetails.name }}</h1>
-    <h3>
+  <div v-if="state.vaultDetails" class="vaultDetailsPage container-fluid">
+    <h1 style="color: red;">
+      {{ state.vaultDetails.name }}
+    </h1>
+    <h3 style="color: blue;">
       {{ state.vaultDetails.description }}
     </h3>
-    <h4 class="mt-1 info-vk">
-      Keeps: {{ state.vaultKeeps.length }}
+    <h4 class="mt-2 mb-2 info-vk">
+      Total Keeps: {{ state.vaultKeeps.length }}
     </h4>
-    <keep-component v-for="keep in state.vaultKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+      <keep-component v-for="keep in state.vaultKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    </div>
   </div>
 </template>
 

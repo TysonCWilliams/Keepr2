@@ -1,6 +1,6 @@
 <template>
-  <div class="row">
-    <div style="height: 100vw;" class="ml-2">
+  <div class="home-page container-fluid bg-light">
+    <div class="grid">
       <div style="break-inside: avoid;"
            class="card-body"
            v-for="keep in keeps"
@@ -41,6 +41,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.grid {
+    margin-top: 2vh;
+    column-count: 1;
+  }
+  @media (min-width: 700px) {
+    .grid {
+      column-count: 2;
+    }
+  }
+  @media (min-width: 975px) {
+    .grid {
+      column-count: 3;
+    }
+  }
+  @media (min-width: 1300px) {
+    .grid {
+      column-count: 4;
+    }
+  }
+  @media (min-width: 1485px) {
+    .grid {
+      column-count: 5;
+    }
+  }
+
   .home {
     text-align: center;
     user-select: none;
