@@ -2,8 +2,6 @@
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/appsettings.json
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/package-lock.json
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/package.json
-/Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/wwwsrc/wwwsrc.client/package-lock.json
-/Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/wwwsrc/wwwsrc.client/package.json
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/keepr2.deps.json
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/keepr2.runtimeconfig.json
 /Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/keepr2.runtimeconfig.dev.json
@@ -42,3 +40,5 @@
 /Users/tyson/source/codeworks/keepr2/obj/Debug/net5.0/ref/keepr2.dll
 /Users/tyson/source/codeworks/keepr2/obj/Debug/net5.0/keepr2.pdb
 /Users/tyson/source/codeworks/keepr2/obj/Debug/net5.0/keepr2.genruntimeconfig.cache
+/Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/wwwsrc/package-lock.json
+/Users/tyson/source/codeworks/keepr2/bin/Debug/net5.0/wwwsrc/package.json

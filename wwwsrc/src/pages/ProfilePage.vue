@@ -80,7 +80,7 @@
               </div>
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
-              <button type="submit" @click="createVault()" class="btn btn-success">
+              <button type="submit" @click="createVault(), toggleVaultModal()" class="btn btn-success">
                 Create
               </button>
             </div>
@@ -90,7 +90,7 @@
     </div>
     <div class="row ml-2 mt-4">
       <h4 class="mt-2">
-        Keeps
+        Keeps:
       </h4>
       <button type="button"
               style="display: block;"
@@ -110,7 +110,7 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalLabel"
-         aria-hidden="false"
+         :aria-hidden="state.showKeepModal"
     >
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -154,7 +154,7 @@
               </div>
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
-              <button type="submit" @click="createKeep()" class="btn btn-success">
+              <button type="submit" @click="createKeep(), toggleKeepModal()" class="btn btn-success">
                 Create
               </button>
             </div>
@@ -200,6 +200,10 @@ export default {
 
       showVaultModel: false,
 
+      toggleKeepModal: false,
+
+      toggleVaultModal: false,
+
       newKeep: {
         name: '',
         description: '',
@@ -226,11 +230,23 @@ export default {
 
       toggleKeepModal() {
         state.showKeepModal = !state.showKeepModal
+        this.removeAllModalBackdrops()
         // console.log('Modal: ' + state.showModal)
       },
       toggleVaultModal() {
         state.showVaultModal = !state.showVaultModal
+        this.removeAllModalBackdrops()
         // console.log('Modal: ' + state.showVaultModal)
+      },
+
+      removeAllModalBackdrops() {
+        document.body.className = document.body.className.replace("modal-open","");
+        // document.querySelectorAll('.modal').forEach(function(el) {
+        //   el.remove()
+        // });
+        document.querySelectorAll('.modal-backdrop').forEach(function(el) {
+          el.remove()
+        });
       }
 
     }

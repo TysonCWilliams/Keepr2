@@ -9,8 +9,8 @@
     <h4 class="mt-2 mb-2 info-vk">
       Total Keeps: {{ state.vaultKeeps.length }}
     </h4>
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
-      <keep-component v-for="keep in state.vaultKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px;">
+      <keep-component style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative; width: 100%; height: 100%" v-for="keep in state.vaultKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
     </div>
   </div>
 </template>

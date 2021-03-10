@@ -1,6 +1,6 @@
 <template>
   <div :style="{background: `url(${keep.img}) !important`, backgroundSize: 'cover', borderRadius: '5px', maxWidth: 'fit-content'}">
-    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card mt-3" style="width: 17rem; height: 350px;">
+    <div @click="toggleKeepModal(), incrementViewCount(keep.id)" class="card" style="width: 17rem; height: 350px;">
       <div class="container">
         <div style="position: relative; width: 100%; margin-left: 15px; top: 275px;" class="row custom-title">
           <div class="mt-3">
@@ -113,7 +113,7 @@ export default {
           vaultId: vault.id,
           keepId: keep.id
         }
-        console.log(newVk)
+        // console.log(newVk)
 
         vaultsService.createVaultKeep(newVk)
       },

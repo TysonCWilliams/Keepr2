@@ -26,7 +26,7 @@ class VaultsService {
     try {
       const res = await api.post('api/vaultkeeps', newVaultKeep)
       // this.getPublicVaults()
-      console.log(res)
+      // console.log(res)
       return res
     } catch (error) {
       logger.log(error)
@@ -37,7 +37,7 @@ class VaultsService {
     try {
       const res = await api.get('api/vaultkeeps/' + vaultId + '/')
       // this.getPublicVaults()
-      console.log(res)
+      // console.log(res)
       return res.data
     } catch (error) {
       logger.log(error)
@@ -59,7 +59,7 @@ class VaultsService {
   async getVaultDetails(vaultId) {
     try {
       const res = await api.get('api/vaults/' + vaultId)
-      console.log(res)
+      // console.log(res)
       return res.data
     } catch (err) {
       logger.error(err)

@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MySqlConnector;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace keepr2
 {
@@ -48,15 +49,15 @@ namespace keepr2
       {
         options.AddPolicy("CorsDevPolicy", builder =>
               {
-            builder
-                  .WithOrigins(new string[]{
+                builder
+                      .WithOrigins(new string[]{
                         "http://localhost:8080",
                         "http://localhost:8081"
-              })
-                  .AllowAnyMethod()
-                  .AllowAnyHeader()
-                  .AllowCredentials();
-          });
+                  })
+                      .AllowAnyMethod()
+                      .AllowAnyHeader()
+                      .AllowCredentials();
+              });
       });
 
       services.AddControllers();
@@ -73,6 +74,15 @@ namespace keepr2
       services.AddTransient<VaultsRepository>();
       services.AddTransient<VaultKeepsService>();
       services.AddTransient<VaultKeepsRepository>();
+      // services.AddHttpsRedirection(options => { options.HttpsPort = 443; });
+
+      // services.Configure<ForwardedHeadersOptions>(options =>
+      // {
+      //   options.ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+      //                               ForwardedHeaders.XForwardedProto;
+      //   options.KnownNetworks.Clear();
+      //   options.KnownProxies.Clear();
+      // });
       // REVIEW Do you want to do something here?
     }
 
@@ -96,7 +106,8 @@ namespace keepr2
 
       Auth0ProviderExtension.ConfigureKeyMap(new List<string>() { "id" });
 
-      app.UseHttpsRedirection();
+      // app.UseHttpsRedirection();
+
 
       app.UseRouting();
 
