@@ -2,17 +2,17 @@
   <div v-if="state.userProfile" class="profile text-center container-fluid">
     <div class="row">
       <div class="col-lg-12 mt-3 ml-1 mr-1">
-        <img class="rounded" :src="state.userProfile.picture" alt="">
+        <img class="rounded" :src="state.userProfile.picture" style="box-shadow: 10px 10px 8px #000000;" alt="">
       </div>
       <div class="col-lg-12 mt-3 ml-1">
-        <h2 class="profile-title">
+        <h2 class="profile-title" style="text-shadow: 10px 10px 8px #000000;">
           {{ state.userProfile.name }}
         </h2>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-3 mt-3" style="width: 140px;">
+      <div class="col-lg-3 mt-3" style="width: 140px; text-shadow: 10px 10px 8px #000000;">
         <h4 class="mt-5 info-vk text-center">
           Vaults: {{ state.userVaults.length }}
         </h4>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-3 mt-3" style="width: 140px;">
+      <div class="col-lg-3 mt-3" style="width: 140px; text-shadow: 10px 10px 8px #000000;">
         <h4 class="mt-4 info-vk text-center">
           Keeps: {{ state.userKeeps.length }}
         </h4>

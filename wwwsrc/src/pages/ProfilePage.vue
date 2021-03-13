@@ -2,9 +2,9 @@
   <div class="profile text-center container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-12 mt-3 ml-1 mr-1">
-        <img class="rounded" :src="profile.picture" alt="">
+        <img class="rounded" :src="profile.picture" style="box-shadow: 10px 10px 8px #000000;" alt="">
       </div>
-      <div class="col-lg-12 mt-4">
+      <div class="col-lg-12 mt-4" style="text-shadow: 10px 10px 8px #000000;">
         <h2 class="profile-title mr-1 ml-1">
           {{ profile.name }}
         </h2>
@@ -17,11 +17,11 @@
       </div>
     </div>
     <div class="row ml-2 mt-4">
-      <h3 class="mt-2" style="text-decoration: underline;">
+      <h3 class="mt-2" style="text-decoration: underline; text-shadow: 10px 10px 8px #000000;">
         Vaults:
       </h3>
       <button type="button"
-              style="display: block;"
+              style="display: block; box-shadow: 10px 10px 8px #000000;"
               @click="toggleVaultModal()"
               class="btn btn-light ml-3 mb-3"
               data-toggle="modal"
@@ -89,11 +89,11 @@
       </div>
     </div>
     <div class="row ml-2 mt-4">
-      <h4 class="mt-2" style="text-decoration: underline;">
+      <h4 class="mt-2" style="text-decoration: underline; text-shadow: 10px 10px 8px #000000;">
         Keeps:
       </h4>
       <button type="button"
-              style="display: block;"
+              style="display: block; box-shadow: 10px 10px 8px #000000;"
               @click="toggleKeepModal()"
               class="btn btn-light ml-3 mb-3"
               data-toggle="modal"
