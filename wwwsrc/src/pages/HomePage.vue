@@ -44,6 +44,7 @@ export default {
 
 .grid {
     margin-top: 2vh;
+    margin-bottom: 2vh;
     column-count: 1;
   }
   @media (min-width: 700px) {

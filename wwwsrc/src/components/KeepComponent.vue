@@ -122,8 +122,8 @@ export default {
       }
 
       // deleteKeep() {
-      //   keepService.deleteKeep(props.keepProp._id)
-      // },
+      //   keepsService.deleteKeep(props.keepProp._id)
+      // }
     }
   },
   components: {}

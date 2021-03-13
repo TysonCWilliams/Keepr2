@@ -1,5 +1,5 @@
 <template>
-  <div class="card mt-3" style="width: 18rem; border-width: thick; border-color: chartreuse;">
+  <div class="card mt-3" style="width: 18rem; border-width: thick; border-color: chartreuse; box-shadow: 10px 10px 8px #000000;">
     <img src="https://i.pinimg.com/originals/09/bd/5b/09bd5b04107d4cc82fadeb7624bfcdb7.jpg" class="card-img-top" alt="">
     <button class="btn custom-class" style="border-color: black; border-style: solid; background-color: transparent;" @click="navigateTo('/vaultDetails/' + vaultProp.id)">
       {{ vaultProp.name }}

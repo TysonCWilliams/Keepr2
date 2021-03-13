@@ -35,27 +35,27 @@
 --       ON DELETE CASCADE
 -- )
 
-CREATE TABLE vaultkeeps(
-  id INT NOT NULL AUTO_INCREMENT,   
-  vaultId INT,
-  keepId INT,
-  creatorId VARCHAR(255) NOT NULL,
+-- CREATE TABLE vaultkeeps(
+--   id INT NOT NULL AUTO_INCREMENT,   
+--   vaultId INT,
+--   keepId INT,
+--   creatorId VARCHAR(255) NOT NULL,
 
-  PRIMARY KEY (id),
+--   PRIMARY KEY (id),
 
-  FOREIGN KEY (vaultId)
-  REFERENCES vaults (id)
-  ON DELETE CASCADE,
+--   FOREIGN KEY (vaultId)
+--   REFERENCES vaults (id)
+--   ON DELETE CASCADE,
 
-  FOREIGN KEY (keepId)
-  REFERENCES keeps (id)
-  ON DELETE CASCADE,
+--   FOREIGN KEY (keepId)
+--   REFERENCES keeps (id)
+--   ON DELETE CASCADE,
 
-   FOREIGN KEY (creatorId)
-        REFERENCES profiles(id)
-        ON DELETE CASCADE
+--    FOREIGN KEY (creatorId)
+--         REFERENCES profiles(id)
+--         ON DELETE CASCADE
 
-)
+-- )
 
 -- DROP TABLE vaultkeeps;
 -- DROP TABLE vaults;

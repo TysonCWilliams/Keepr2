@@ -1,11 +1,11 @@
 <template>
   <div class="profile text-center container-fluid">
     <div class="row">
-      <div class="col-sm-1 col-lg-12 mt-3 ml-1">
+      <div class="col-sm-12 col-lg-12 mt-3 ml-1 mr-1">
         <img class="rounded" :src="profile.picture" alt="">
       </div>
-      <div class="col-sm-1 col-lg-12 mt-4">
-        <h2 class="profile-title mr-1">
+      <div class="col-lg-12 mt-4">
+        <h2 class="profile-title mr-1 ml-1">
           {{ profile.name }}
         </h2>
         <h4 class="mt-1 info-vk" style="width: 140px;">
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="row ml-2 mt-4">
-      <h3 class="mt-2">
+      <h3 class="mt-2" style="text-decoration: underline;">
         Vaults:
       </h3>
       <button type="button"
@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="row ml-2 mt-4">
-      <h4 class="mt-2">
+      <h4 class="mt-2" style="text-decoration: underline;">
         Keeps:
       </h4>
       <button type="button"
@@ -164,7 +164,7 @@
     </div>
 
     <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap;">
-      <div class="ml-2 mr-3 mt-3" v-for="keep in state.myKeeps" :key="keep.id">
+      <div class="ml-2 mr-3 mt-3 mb-4" v-for="keep in state.myKeeps" :key="keep.id">
         <keep-component style="position: relative; width: 100%;" :keep-prop="keep"></keep-component>
       </div>
     </div>

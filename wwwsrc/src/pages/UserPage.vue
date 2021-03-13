@@ -1,10 +1,10 @@
 <template>
   <div v-if="state.userProfile" class="profile text-center container-fluid">
     <div class="row">
-      <div class="col-3 mt-3 ml-3">
+      <div class="col-lg-12 mt-3 ml-1 mr-1">
         <img class="rounded" :src="state.userProfile.picture" alt="">
       </div>
-      <div class="col-2 mt-4">
+      <div class="col-lg-12 mt-3 ml-1">
         <h2 class="profile-title">
           {{ state.userProfile.name }}
         </h2>
@@ -12,32 +12,29 @@
     </div>
 
     <div class="row">
-      <div class="col-2">
+      <div class="col-lg-3 mt-3" style="width: 140px;">
         <h4 class="mt-5 info-vk text-center">
           Vaults: {{ state.userVaults.length }}
         </h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col-5">
-        <vault-component v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
-      </div>
+    <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
+      <vault-component style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative;" v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
     </div>
 
     <div class="row">
-      <div class="col-2">
+      <div class="col-lg-3 mt-3" style="width: 140px;">
         <h4 class="mt-4 info-vk text-center">
           Keeps: {{ state.userKeeps.length }}
         </h4>
       </div>
     </div>
-    <div class="row">
-      <div class="col-6">
-        <keep-component v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
-      </div>
+      <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
+      <keep-component style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative; width: 100%; height: 100%" v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
     </div>
   </div>
 </template>
+
 
 <script>
 import { onMounted, computed, reactive } from 'vue'
@@ -90,6 +87,8 @@ export default {
 </script>
 
 <style scoped>
+
+
   img {
     max-width: 100px;
   }
