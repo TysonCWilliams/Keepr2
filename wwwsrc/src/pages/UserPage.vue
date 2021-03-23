@@ -18,8 +18,11 @@
         </h4>
       </div>
     </div>
-    <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
-      <vault-component style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative;" v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
+    <div class="col-sm-12"
+      style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
+      <vault-component
+        style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative;"
+        v-for="vault in state.userVaults" :vault-prop="vault" :key="vault.id"></vault-component>
     </div>
 
     <div class="row">
@@ -29,66 +32,66 @@
         </h4>
       </div>
     </div>
-      <div class="col-sm-12" style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
-      <keep-component style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative; width: 100%; height: 100%" v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
+    <div class="col-sm-12"
+      style="display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 30px; margin-bottom: 20px;">
+      <keep-component
+        style="margin-left: 15px; margin-right: 15px; margin-top: 20px; margin-bottom: 20px; position: relative; width: 100%; height: 100%"
+        v-for="keep in state.userKeeps" :keep-prop="keep" :key="keep.id"></keep-component>
     </div>
   </div>
 </template>
 
-
 <script>
-import { onMounted, computed, reactive } from 'vue'
-import { AppState } from '../AppState'
-import { profilesService } from '../services/ProfilesService'
-import { keepsService } from '../services/KeepsService'
-import { vaultsService } from '../services/VaultsService'
-import { KeepComponent } from '../components/KeepComponent.vue'
-import { VaultComponent } from '../components/VaultComponent.vue'
-import { useRoute } from 'vue-router'
+  import { onMounted, computed, reactive } from 'vue'
+  import { AppState } from '../AppState'
+  import { profilesService } from '../services/ProfilesService'
+  import { keepsService } from '../services/KeepsService'
+  import { vaultsService } from '../services/VaultsService'
+  import { KeepComponent } from '../components/KeepComponent.vue'
+  import { VaultComponent } from '../components/VaultComponent.vue'
+  import { useRoute } from 'vue-router'
 
-export default {
-  name: 'UserPage',
-  setup() {
-    const route = useRoute()
-    const state = reactive({
-      userProfile: null,
-      userKeeps: [],
-      userVaults: []
-    })
-    onMounted(() => {
-      setTimeout(() => {
-        profilesService.getProfileById(route.params.userId).then(res => {
-          state.userProfile = res
-          vaultsService.getAllVaultsForUser(route.params.userId).then(res => {
-            // console.log(res)
-            res.forEach((item, index) => {
-              item.creator = state.userProfile
+  export default {
+    name: 'UserPage',
+    setup() {
+      const route = useRoute()
+      const state = reactive({
+        userProfile: null,
+        userKeeps: [],
+        userVaults: []
+      })
+      onMounted(() => {
+        setTimeout(() => {
+          profilesService.getProfileById(route.params.userId).then(res => {
+            state.userProfile = res
+            vaultsService.getAllVaultsForUser(route.params.userId).then(res => {
+              // console.log(res)
+              res.forEach((item, index) => {
+                item.creator = state.userProfile
+              })
+              state.userVaults = res
             })
-            state.userVaults = res
-          })
 
-          keepsService.getAllKeepsForUser(route.params.userId).then(res => {
-            // console.log(res)
-            res.forEach((item, index) => {
-              item.creator = state.userProfile
+            keepsService.getAllKeepsForUser(route.params.userId).then(res => {
+              // console.log(res)
+              res.forEach((item, index) => {
+                item.creator = state.userProfile
+              })
+              state.userKeeps = res
             })
-            state.userKeeps = res
           })
-        })
-      }, 3000)
-    })
-    return {
-      state,
-      keeps: computed(() => AppState.keeps)
-    }
-  },
-  components: { KeepComponent, VaultComponent }
-}
+        }, 3000)
+      })
+      return {
+        state,
+        keeps: computed(() => AppState.keeps)
+      }
+    },
+    components: { KeepComponent, VaultComponent }
+  }
 </script>
 
 <style scoped>
-
-
   img {
     max-width: 100px;
   }

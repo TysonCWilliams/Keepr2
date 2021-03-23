@@ -9,10 +9,10 @@
           {{ profile.name }}
         </h2>
         <h4 class="mt-1 info-vk" style="width: 140px;">
-          Vaults:  {{ state.myVaults.length }}
+          Vaults: {{ state.myVaults.length }}
         </h4>
         <h4 class="mt-1 info-vk" style="width: 140px;">
-          Keeps:  {{ state.myKeeps.length }}
+          Keeps: {{ state.myKeeps.length }}
         </h4>
       </div>
     </div>
@@ -20,13 +20,8 @@
       <h3 class="mt-2" style="text-decoration: underline; text-shadow: 10px 10px 8px #000000;">
         Vaults:
       </h3>
-      <button type="button"
-              style="display: block; box-shadow: 10px 10px 8px #000000;"
-              @click="toggleVaultModal()"
-              class="btn btn-light ml-3 mb-3"
-              data-toggle="modal"
-              data-target="#form"
-      >
+      <button type="button" style="display: block; box-shadow: 10px 10px 8px #000000;" @click="toggleVaultModal()"
+        class="btn btn-light ml-3 mb-3" data-toggle="modal" data-target="#form">
         <i class="fas fa-plus-square fa-2x fa-spin"></i>
       </button>
     </div>
@@ -36,13 +31,8 @@
       </div>
     </div>
 
-    <div style="display: block !important;"
-         v-if="state.showVaultModal"
-         class="modal fade show"
-         id="form"
-         tabindex="-1"
-         role="dialog"
-    >
+    <div style="display: block !important;" v-if="state.showVaultModal" class="modal fade show" id="form" tabindex="-1"
+      role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header border-bottom-0">
@@ -57,22 +47,13 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="vault-name">Name</label>
-                <input type="text"
-                       v-model="state.newVault.name"
-                       class="form-control"
-                       id="vault-name"
-                       aria-describedby="vault-name"
-                       placeholder="Enter Vault Name..."
-                >
+                <input type="text" v-model="state.newVault.name" class="form-control" id="vault-name"
+                  aria-describedby="vault-name" placeholder="Enter Vault Name...">
               </div>
               <div class="form-group">
                 <label for="vault-description">Description</label>
-                <input type="text"
-                       v-model="state.newVault.description"
-                       class="form-control"
-                       id="vault-description"
-                       placeholder="Description"
-                >
+                <input type="text" v-model="state.newVault.description" class="form-control" id="vault-description"
+                  placeholder="Description">
               </div>
               <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="isPrivate" v-model="state.newVault.isPrivate">
@@ -92,26 +73,14 @@
       <h4 class="mt-2" style="text-decoration: underline; text-shadow: 10px 10px 8px #000000;">
         Keeps:
       </h4>
-      <button type="button"
-              style="display: block; box-shadow: 10px 10px 8px #000000;"
-              @click="toggleKeepModal()"
-              class="btn btn-light ml-3 mb-3"
-              data-toggle="modal"
-              data-target="#form"
-      >
+      <button type="button" style="display: block; box-shadow: 10px 10px 8px #000000;" @click="toggleKeepModal()"
+        class="btn btn-light ml-3 mb-3" data-toggle="modal" data-target="#form">
         <i class="fas fa-plus-square fa-2x fa-spin"></i>
       </button>
     </div>
 
-    <div style="display: block !important;"
-         v-if="state.showKeepModal"
-         class="modal fade show"
-         id="form"
-         tabindex="-1"
-         role="dialog"
-         aria-labelledby="exampleModalLabel"
-         :aria-hidden="state.showKeepModal"
-    >
+    <div style="display: block !important;" v-if="state.showKeepModal" class="modal fade show" id="form" tabindex="-1"
+      role="dialog" aria-labelledby="exampleModalLabel" :aria-hidden="state.showKeepModal">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header border-bottom-0">
@@ -126,31 +95,18 @@
             <div class="modal-body">
               <div class="form-group">
                 <label for="keep-name">Title</label>
-                <input type="text"
-                       v-model="state.newKeep.name"
-                       class="form-control"
-                       id="keep-name"
-                       aria-describedby="keep-name"
-                       placeholder="Enter Keep Name..."
-                >
+                <input type="text" v-model="state.newKeep.name" class="form-control" id="keep-name"
+                  aria-describedby="keep-name" placeholder="Enter Keep Name...">
               </div>
               <div class="form-group">
                 <label for="keep-image">Image</label>
-                <input type="text"
-                       v-model="state.newKeep.img"
-                       class="form-control"
-                       id="keep-image"
-                       placeholder="URL..."
-                >
+                <input type="text" v-model="state.newKeep.img" class="form-control" id="keep-image"
+                  placeholder="URL...">
               </div>
               <div class="form-group">
                 <label for="keep-description">Description</label>
-                <input type="text"
-                       v-model="state.newKeep.description"
-                       class="form-control"
-                       id="keep-description"
-                       placeholder="Enter Description..."
-                >
+                <input type="text" v-model="state.newKeep.description" class="form-control" id="keep-description"
+                  placeholder="Enter Description...">
               </div>
             </div>
             <div class="modal-footer border-top-0 d-flex justify-content-center">
@@ -172,92 +128,91 @@
 </template>
 
 <script>
-import { computed, onMounted, reactive } from 'vue'
-import { AppState } from '../AppState'
-import { keepsService } from '../services/KeepsService'
-import { profilesService } from '../services/ProfilesService'
-import { KeepComponent } from '../components/KeepComponent.vue'
-import { vaultsService } from '../services/VaultsService'
-import { VaultComponent } from '../components/VaultComponent.vue'
+  import { computed, onMounted, reactive } from 'vue'
+  import { AppState } from '../AppState'
+  import { keepsService } from '../services/KeepsService'
+  import { profilesService } from '../services/ProfilesService'
+  import { KeepComponent } from '../components/KeepComponent.vue'
+  import { vaultsService } from '../services/VaultsService'
+  import { VaultComponent } from '../components/VaultComponent.vue'
 
-export default {
-  name: 'Profile',
-  setup() {
-    onMounted(async() => {
-      if (!AppState.profile.id) {
-        await profilesService.getProfile()
+  export default {
+    name: 'Profile',
+    setup() {
+      onMounted(async () => {
+        if (!AppState.profile.id) {
+          await profilesService.getProfile()
+        }
+        const myKeeps = await keepsService.getMyKeeps()
+        state.myKeeps = myKeeps
+        const myVaults = await vaultsService.getAllVaultsForUser(AppState.profile.id)
+        // console.log(myVaults)
+        state.myVaults = myVaults
+      })
+      const state = reactive({
+        myKeeps: [],
+        myVaults: [],
+        showKeepModal: false,
+
+        showVaultModel: false,
+
+        toggleKeepModal: false,
+
+        toggleVaultModal: false,
+
+        newKeep: {
+          name: '',
+          description: '',
+          img: ''
+        },
+        newVault: {
+          name: '',
+          description: '',
+          isPrivate: false
+        }
+      })
+      return {
+        state,
+        createKeep() {
+          // state.newKeep
+          keepsService.createKeep(state.newKeep)
+        },
+        createVault() {
+          vaultsService.createVault(state.newVault)
+        },
+        profile: computed(() => AppState.profile),
+        keeps: computed(() => AppState.keeps),
+        vaults: computed(() => AppState.vaults),
+
+        toggleKeepModal() {
+          state.showKeepModal = !state.showKeepModal
+          this.removeAllModalBackdrops()
+          // console.log('Modal: ' + state.showModal)
+        },
+        toggleVaultModal() {
+          state.showVaultModal = !state.showVaultModal
+          this.removeAllModalBackdrops()
+          // console.log('Modal: ' + state.showVaultModal)
+        },
+
+        removeAllModalBackdrops() {
+          document.body.className = document.body.className.replace("modal-open", "");
+          // document.querySelectorAll('.modal').forEach(function(el) {
+          //   el.remove()
+          // });
+          document.querySelectorAll('.modal-backdrop').forEach(function (el) {
+            el.remove()
+          });
+        }
+
       }
-      const myKeeps = await keepsService.getMyKeeps()
-      state.myKeeps = myKeeps
-      const myVaults = await vaultsService.getAllVaultsForUser(AppState.profile.id)
-      // console.log(myVaults)
-      state.myVaults = myVaults
-    })
-    const state = reactive({
-      myKeeps: [],
-      myVaults: [],
-      showKeepModal: false,
-
-      showVaultModel: false,
-
-      toggleKeepModal: false,
-
-      toggleVaultModal: false,
-
-      newKeep: {
-        name: '',
-        description: '',
-        img: ''
-      },
-      newVault: {
-        name: '',
-        description: '',
-        isPrivate: false
-      }
-    })
-    return {
-      state,
-      createKeep() {
-        // state.newKeep
-        keepsService.createKeep(state.newKeep)
-      },
-      createVault() {
-        vaultsService.createVault(state.newVault)
-      },
-      profile: computed(() => AppState.profile),
-      keeps: computed(() => AppState.keeps),
-      vaults: computed(() => AppState.vaults),
-
-      toggleKeepModal() {
-        state.showKeepModal = !state.showKeepModal
-        this.removeAllModalBackdrops()
-        // console.log('Modal: ' + state.showModal)
-      },
-      toggleVaultModal() {
-        state.showVaultModal = !state.showVaultModal
-        this.removeAllModalBackdrops()
-        // console.log('Modal: ' + state.showVaultModal)
-      },
-
-      removeAllModalBackdrops() {
-        document.body.className = document.body.className.replace("modal-open","");
-        // document.querySelectorAll('.modal').forEach(function(el) {
-        //   el.remove()
-        // });
-        document.querySelectorAll('.modal-backdrop').forEach(function(el) {
-          el.remove()
-        });
-      }
-
-    }
-  },
-  components: { KeepComponent, VaultComponent }
-}
+    },
+    components: { KeepComponent, VaultComponent }
+  }
 </script>
 
 <style scoped>
-
-.grid {
+  .grid {
     /* margin-top: 2vh; */
     line-height: 40px;
     column-count: 1;
@@ -268,16 +223,19 @@ export default {
       column-count: 2;
     }
   }
+
   @media (min-width: 900px) {
     .grid {
       column-count: 3;
     }
   }
+
   @media (min-width: 1100px) {
     .grid {
       column-count: 4;
     }
   }
+
   @media (min-width: 1200px) {
     .grid {
       column-count: 5;

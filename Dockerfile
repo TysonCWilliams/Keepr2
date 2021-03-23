@@ -7,6 +7,7 @@ WORKDIR /App
 # EXPOSE 80
 
 EXPOSE 3306
+EXPOSE 1433
 
 # RUN dotnet dev-certs https
 
